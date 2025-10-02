@@ -1,0 +1,30 @@
+# зависимости
+node_modules/
+
+# сборка
+dist/
+*.local
+
+# логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ОС
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# тесты/coverage
+coverage/
+*.lcov
+
+# env
+.env
+.env.*
+!.env.example

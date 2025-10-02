@@ -1,0 +1,562 @@
+.placeholderText {
+  color: #b0b0b0;
+  font-size: 14px;
+  margin: 0;
+}
+
+.chunksContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Основная панель */
+.panel {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  border-radius: 8px;
+  min-width: 465px;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.panelHidden {
+  display: none;
+}
+
+.revealButton {
+  position: absolute;
+  top: 32px;
+  left: 20px;
+  z-index: 1001;
+  background: rgb(17, 17, 17);
+  backdrop-filter: blur(10px);
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #e0e0e0;
+}
+
+.collapseHandle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1001;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(17, 17, 17);
+  backdrop-filter: blur(10px);
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+  color: #e0e0e0;
+  cursor: pointer;
+}
+
+.collapseHandle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Заголовок панели */
+.header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Табы */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  color: #b0b0b0;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease;
+}
+
+.tab:hover {
+  color: #e0e0e0;
+}
+
+.tabActive {
+  color: #4caf50;
+  border-bottom-color: #4caf50;
+}
+
+.tabActive:hover {
+  color: #4caf50;
+}
+
+/* Содержимое таба */
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 20px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+}
+
+/* Заголовки табов */
+.tabTitle {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+/* Группа инпута */
+.inputGroup {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Кнопка экспорта */
+.exportButton {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  margin-top: 8px;
+}
+
+.exportButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.exportButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.checkboxLabel input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+
+/* Текстовый инпут */
+.textInput {
+  width: 100%;
+  max-width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 14px;
+  line-height: 18px;
+  box-sizing: border-box;
+}
+
+.textInput::placeholder {
+  color: #888;
+}
+
+.textInput:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+/* Кнопка загрузки */
+.uploadButton {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadButton:hover {
+  background: #45a049;
+}
+
+.uploadButtonDisabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.uploadButtonDisabled:hover {
+  background: #666;
+}
+
+.uploadButtonDisabled svg {
+  opacity: 0.5;
+}
+
+/* Информация о вводе */
+.inputInfo {
+  padding: 8px 12px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #4caf50;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+/* Информация о загрузке */
+.loadingInfo {
+  padding: 8px 12px;
+  background: rgba(33, 150, 243, 0.1);
+  border: 1px solid rgba(33, 150, 243, 0.3);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #2196f3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Информация об ошибке */
+.errorInfo {
+  padding: 8px 12px;
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #f44336;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Спиннер для загрузки */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Заглушки */
+.placeholderText {
+  color: #b0b0b0;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Стили для таба Chunks */
+.chunksList {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-top: 16px;
+  padding-bottom: 70vh;
+}
+
+.chunkGroup {
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: clip;
+}
+
+.chunkHeader {
+  padding: 12px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s ease;
+}
+
+.chunkHeader:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chunkTitleButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  flex: 1;
+}
+
+.chunkGroupActions {
+  display: flex;
+  gap: 4px;
+  margin-left: 12px;
+}
+
+.groupActionButton {
+  padding: 4px 6px;
+  font-size: 12px;
+  min-width: 24px;
+  height: 24px;
+}
+
+.chunkContent {
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hasDynamic {
+  padding-block: 8px 0;
+}
+
+.chunkItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px;
+  gap: 12px;
+}
+
+.uploadGroup {
+  margin-bottom: 16px;
+}
+
+.inlineRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.compact {
+  padding: 8px 12px;
+}
+
+.chunkItem.nested {
+  padding-left: 32px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chunkInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.chunkType {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a9eff;
+  text-transform: uppercase;
+}
+
+.chunkId {
+  font-size: 12px;
+  color: #b0b0b0;
+  font-family: monospace;
+}
+
+.chunkPoints {
+  font-size: 11px;
+  color: #888;
+}
+
+.chunkActions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionButton {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #b0b0b0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.actionButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.actionButton.visible {
+  border-color: #4a9eff;
+  color: #4a9eff;
+}
+
+.actionButton.hidden {
+  border-color: #666;
+  color: #666;
+}
+
+.actionButton.focusButton {
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.actionButton.focusButton:hover {
+  border-color: #66bb6a;
+  color: #66bb6a;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.actionButton.deleteButton:hover {
+  border-color: #ff4444;
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.dynamicHeader {
+  padding: 12px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a9eff;
+  background: rgba(74, 158, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dynamicTitleButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+  color: inherit;
+  font: inherit;
+}
+
+.dynamicTitleButton:hover {
+  color: #ffffff;
+}
+
+.dynamicActions {
+  display: flex;
+  gap: 4px;
+}
+
+.dynamicContent {
+  padding: 0;
+}
+
+.loadingIndicator {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  padding: 8px 12px;
+  background: rgba(17, 17, 17, 0.85);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loadingIndicator::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  animation: loadingIndicatorSpin 0.6s linear infinite;
+}
+
+@keyframes loadingIndicatorSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.highlightedItem {
+  border-color: #ffd54f;
+  background: rgba(255, 213, 79, 0.12);
+}
+
+.highlightedGroup {
+  border: 1px solid #ffd54f;
+  border-radius: 6px;
+  background: rgba(255, 213, 79, 0.12);
+}
+
+/* Постоянно выбранный динамический элемент */
+.selectedDynamicItem {
+  border: 2px solid #ffd54f;
+  background: rgba(255, 235, 59, 0.3); /* ярче жёлтый */
+  box-shadow:
+    0 0 0 1px rgba(255, 213, 79, 0.6) inset,
+    0 0 8px rgba(255, 213, 79, 0.45);
+}
+
+.checkboxGroup {
+  margin-bottom: 16px;
+}
+
+.sliderGroup {
+  margin-bottom: 16px;
+}

@@ -1,0 +1,173 @@
+/* Основной контейнер слайдера */
+.slider {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* Лейбл слайдера */
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+/* Контейнер для слайдера и значения */
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Стили для input range */
+.input {
+  flex: 1;
+  height: 6px;
+  background: #333;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  transition: background-color 0.2s ease;
+}
+
+.input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.input::-webkit-slider-thumb:hover {
+  background: #45a049;
+  transform: scale(1.1);
+}
+
+.input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.input::-moz-range-thumb:hover {
+  background: #45a049;
+  transform: scale(1.1);
+}
+
+.input::-ms-thumb {
+  width: 18px;
+  height: 18px;
+  background: #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.input::-ms-thumb:hover {
+  background: #45a049;
+  transform: scale(1.1);
+}
+
+/* Стили для трека в Firefox */
+.input::-moz-range-track {
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  border: none;
+}
+
+/* Стили для трека в IE/Edge */
+.input::-ms-track {
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  border: none;
+  color: transparent;
+}
+
+.input::-ms-fill-lower {
+  background: #4caf50;
+  border-radius: 3px;
+}
+
+.input::-ms-fill-upper {
+  background: #333;
+  border-radius: 3px;
+}
+
+/* Отключенное состояние */
+.inputDisabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
+.inputDisabled::-webkit-slider-thumb {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.inputDisabled::-webkit-slider-thumb:hover {
+  background: #666;
+  transform: none;
+}
+
+.inputDisabled::-moz-range-thumb {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.inputDisabled::-moz-range-thumb:hover {
+  background: #666;
+  transform: none;
+}
+
+.inputDisabled::-ms-thumb {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.inputDisabled::-ms-thumb:hover {
+  background: #666;
+  transform: none;
+}
+
+/* Отображение значения */
+.value {
+  min-width: 40px;
+  text-align: right;
+  font-size: 14px;
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+.valueDisabled {
+  color: #666;
+}
+
+/* Фокус для доступности */
+.input:focus {
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+.input:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+.input:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+.input:focus::-ms-thumb {
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
