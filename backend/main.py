@@ -232,9 +232,6 @@ async def post_results(data: dict = Body(...)):
     ])
 
     return {
-        "job_id": job_id,
-        "status": "done",
-        "input_file": f"{BASE_URL}/{input_file.relative_to(Path('.')).as_posix()}",
-        "bbox_file": f"{BASE_URL}/{bbox_file.relative_to(Path('.')).as_posix()}",
-        "result_file": f"{BASE_URL}/{output_file.relative_to(Path('.')).as_posix()}"
+        "download_url": f"{BASE_URL}/{output_file.relative_to(Path('.')).as_posix()}",
+        "success": True
     }
