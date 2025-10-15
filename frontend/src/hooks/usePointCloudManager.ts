@@ -28,7 +28,7 @@ const createChunk = (
     center: [number, number, number];
     size: [number, number, number];
     yaw: number;
-  }
+  },
 ): PointChunk => ({
   id,
   points,
@@ -77,7 +77,7 @@ export const usePointCloudManager = (): PointCloudManager => {
         center: [number, number, number];
         size: [number, number, number];
         yaw: number;
-      }
+      },
     ) => {
       if (chunksMapRef.current.has(id)) {
         return;
@@ -87,12 +87,12 @@ export const usePointCloudManager = (): PointCloudManager => {
         points,
         fileUrl,
         confidence,
-        apiBounding
+        apiBounding,
       );
       chunksMapRef.current.set(id, newChunk);
       syncChunksState();
     },
-    [syncChunksState]
+    [syncChunksState],
   );
 
   const removeChunk = useCallback(
@@ -116,12 +116,12 @@ export const usePointCloudManager = (): PointCloudManager => {
       }
       syncChunksState();
     },
-    [activeHighlightBaseId, syncChunksState]
+    [activeHighlightBaseId, syncChunksState],
   );
 
   const removeChunks = useCallback(
     (ids: string[]) => {
-      ids.forEach(id => {
+      ids.forEach((id) => {
         const chunk = chunksMapRef.current.get(id);
         if (!chunk) return;
         disposeChunkResources(chunk);
@@ -140,11 +140,11 @@ export const usePointCloudManager = (): PointCloudManager => {
       }
       syncChunksState();
     },
-    [activeHighlightBaseId, syncChunksState]
+    [activeHighlightBaseId, syncChunksState],
   );
 
   const clearAllChunks = useCallback(() => {
-    chunksMapRef.current.forEach(chunk => {
+    chunksMapRef.current.forEach((chunk) => {
       disposeChunkResources(chunk);
     });
     chunksMapRef.current.clear();
@@ -161,7 +161,7 @@ export const usePointCloudManager = (): PointCloudManager => {
       }
       syncChunksState();
     },
-    [syncChunksState]
+    [syncChunksState],
   );
 
   const updateChunkPoints = useCallback(
@@ -171,7 +171,7 @@ export const usePointCloudManager = (): PointCloudManager => {
       chunk.pointCount = points.length;
       syncChunksState();
     },
-    [syncChunksState]
+    [syncChunksState],
   );
 
   const setChunkMesh = useCallback(
@@ -217,7 +217,7 @@ export const usePointCloudManager = (): PointCloudManager => {
 
       syncChunksState();
     },
-    [syncChunksState]
+    [syncChunksState],
   );
 
   const setActiveBase = useCallback((baseId: string | null) => {
@@ -232,7 +232,7 @@ export const usePointCloudManager = (): PointCloudManager => {
     }
     renderSessionRef.current.expected = expectedCount;
     renderSessionRef.current.resolved = 0;
-    renderSessionRef.current.promise = new Promise<void>(resolve => {
+    renderSessionRef.current.promise = new Promise<void>((resolve) => {
       renderSessionRef.current.resolver = resolve;
       if (expectedCount === 0) {
         resolve();

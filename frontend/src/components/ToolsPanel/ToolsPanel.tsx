@@ -37,7 +37,7 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
     window.dispatchEvent(
       new CustomEvent("pcd-create-bbox-at", {
         detail: { position: center.clone() },
-      })
+      }),
     );
   }, [transformControllerRef, onBboxCreated]);
 

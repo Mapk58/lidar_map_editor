@@ -68,7 +68,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
     if (overlayTransformRef.current && controllerRef.current) {
       controllerRef.current.position.copy(overlayTransformRef.current.position);
       controllerRef.current.quaternion.copy(
-        overlayTransformRef.current.quaternion
+        overlayTransformRef.current.quaternion,
       );
     }
   }, [
@@ -83,13 +83,13 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
   });
 
   const chunksToRender = useMemo(() => {
-    const filtered = pointCloudManager.chunks.filter(chunk => chunk.visible);
+    const filtered = pointCloudManager.chunks.filter((chunk) => chunk.visible);
     return filtered;
   }, [pointCloudManager.chunks]);
 
   const computeBoundingBox = useCallback((meshes: THREE.Object3D[]) => {
     const box = new THREE.Box3();
-    meshes.forEach(mesh => box.expandByObject(mesh));
+    meshes.forEach((mesh) => box.expandByObject(mesh));
     return box;
   }, []);
 
@@ -145,7 +145,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
         const bboxSize = new THREE.Vector3(
           apiBounding.size[0],
           apiBounding.size[1],
-          apiBounding.size[2]
+          apiBounding.size[2],
         );
 
         onBboxCreated({
@@ -156,11 +156,11 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
         });
       }
     },
-    [clearAllBboxes, onBboxCreated]
+    [clearAllBboxes, onBboxCreated],
   );
 
   useEffect(() => {
-    const loadedChunks = chunksToRender.filter(chunk => chunk.mesh);
+    const loadedChunks = chunksToRender.filter((chunk) => chunk.mesh);
     const allLoaded =
       chunksToRender.length > 0 &&
       loadedChunks.length === chunksToRender.length;
@@ -171,7 +171,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
   useEffect(() => {
     if (allChunksLoaded && cameraControlsRef.current && !hasPositionedCamera) {
       const loadedMeshes = chunksToRender
-        .map(chunk => chunk.mesh)
+        .map((chunk) => chunk.mesh)
         .filter((mesh): mesh is THREE.Points => Boolean(mesh));
 
       if (loadedMeshes.length === 0) return;
@@ -185,7 +185,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
       const newPosition = new THREE.Vector3(
         center.x + distance,
         center.y + distance * 0.5,
-        center.z + distance
+        center.z + distance,
       );
 
       cameraControlsRef.current.setLookAt(
@@ -195,7 +195,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
         center.x,
         center.y,
         center.z,
-        true
+        true,
       );
 
       if (controllerRef.current) {
@@ -239,12 +239,12 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
     };
     window.addEventListener(
       "pcd-create-bbox-at",
-      onCreateBboxAt as EventListener
+      onCreateBboxAt as EventListener,
     );
     return () =>
       window.removeEventListener(
         "pcd-create-bbox-at",
-        onCreateBboxAt as EventListener
+        onCreateBboxAt as EventListener,
       );
   }, [createAndFocusBbox]);
 
@@ -276,14 +276,14 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
       };
       window.addEventListener("pcd-bbox-ref", onBboxRef as EventListener);
       window.dispatchEvent(
-        new CustomEvent("pcd-bind-bbox", { detail: { id } })
+        new CustomEvent("pcd-bind-bbox", { detail: { id } }),
       );
     };
     window.addEventListener("pcd-pulse-chunk", onDynamicFocus as EventListener);
     return () =>
       window.removeEventListener(
         "pcd-pulse-chunk",
-        onDynamicFocus as EventListener
+        onDynamicFocus as EventListener,
       );
   }, [createAndFocusBbox]);
 
@@ -317,12 +317,12 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
 
     window.addEventListener(
       "pcd-pulse",
-      onNonDynamicDoubleClick as EventListener
+      onNonDynamicDoubleClick as EventListener,
     );
     return () => {
       window.removeEventListener(
         "pcd-pulse",
-        onNonDynamicDoubleClick as EventListener
+        onNonDynamicDoubleClick as EventListener,
       );
     };
   }, [clearAllBboxes]);
@@ -338,7 +338,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
 
-        {chunksToRender.map(chunk => {
+        {chunksToRender.map((chunk) => {
           let color = "#ffffff";
           if (chunk.id.includes("ground")) {
             color = "#8B4513";

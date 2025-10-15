@@ -41,7 +41,7 @@ export type PointCloudManager = {
       center: [number, number, number];
       size: [number, number, number];
       yaw: number;
-    }
+    },
   ) => void;
   removeChunk: (id: string) => void;
   removeChunks: (ids: string[]) => void;

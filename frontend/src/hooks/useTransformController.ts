@@ -5,7 +5,7 @@ import * as THREE from "three";
 type UseTransformControllerProps = {
   cameraControlsRef: React.RefObject<CameraControls | null>;
   onControllerReady?: (
-    controllerRef: React.RefObject<THREE.Group | null>
+    controllerRef: React.RefObject<THREE.Group | null>,
   ) => void;
 };
 
@@ -39,7 +39,7 @@ export const useTransformController = ({
       newPosition.x,
       newPosition.y,
       newPosition.z,
-      true
+      true,
     );
   };
 

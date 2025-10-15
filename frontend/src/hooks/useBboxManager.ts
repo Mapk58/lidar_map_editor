@@ -17,7 +17,7 @@ type BoundingBox = {
 export const useBboxManager = (
   pointCloudManager: PointCloudManager,
   objectRef?: React.RefObject<THREE.Object3D | null>,
-  fillSurface?: boolean
+  fillSurface?: boolean,
 ) => {
   const [deletedBboxes, setDeletedBboxes] = useState<BboxData[]>([]);
   const [currentBbox, setCurrentBbox] = useState<BoundingBox | null>(null);
@@ -52,12 +52,12 @@ export const useBboxManager = (
         Math.abs(localPoint.z) <= halfSize.z
       );
     },
-    []
+    [],
   );
 
   const removePointsInBbox = useCallback(
     (bbox: BoundingBox) => {
-      pointCloudManager.chunks.forEach(chunk => {
+      pointCloudManager.chunks.forEach((chunk) => {
         if (chunk.mesh && chunk.mesh.geometry) {
           const geometry = chunk.mesh.geometry;
           const positionAttribute = geometry.getAttribute("position");
@@ -92,7 +92,7 @@ export const useBboxManager = (
               const newPositions = new Float32Array(filteredPositions);
               geometry.setAttribute(
                 "position",
-                new THREE.BufferAttribute(newPositions, 3)
+                new THREE.BufferAttribute(newPositions, 3),
               );
               geometry.computeBoundingSphere();
             } else {
@@ -102,14 +102,14 @@ export const useBboxManager = (
         }
       });
     },
-    [pointCloudManager, isPointInBbox]
+    [pointCloudManager, isPointInBbox],
   );
 
   const removeChunk = useCallback(
     (bbox: BoundingBox) => {
       if (bbox.chunkId) {
         const targetChunk = pointCloudManager.chunks.find(
-          chunk => chunk.id === bbox.chunkId
+          (chunk) => chunk.id === bbox.chunkId,
         );
 
         if (targetChunk) {
@@ -117,7 +117,7 @@ export const useBboxManager = (
         }
       }
     },
-    [pointCloudManager]
+    [pointCloudManager],
   );
 
   const setBbox = useCallback((bbox: BoundingBox | null) => {
@@ -132,7 +132,7 @@ export const useBboxManager = (
         let bboxObj = target;
         if (!target.userData?.apiBounding) {
           const bboxChild = target.children.find(
-            child => child.userData?.apiBounding
+            (child) => child.userData?.apiBounding,
           ) as THREE.Object3D | undefined;
           if (bboxChild) {
             bboxObj = bboxChild;
@@ -159,7 +159,7 @@ export const useBboxManager = (
             removeChunk(actualBbox);
           }
 
-          setDeletedBboxes(prev => [...prev, convertToBboxData(actualBbox)]);
+          setDeletedBboxes((prev) => [...prev, convertToBboxData(actualBbox)]);
         } else {
           if (isBboxResized) {
             removePointsInBbox(currentBbox);
@@ -168,7 +168,7 @@ export const useBboxManager = (
             removeChunk(currentBbox);
           }
 
-          setDeletedBboxes(prev => [
+          setDeletedBboxes((prev) => [
             ...prev,
             convertToBboxData({
               ...currentBbox,
@@ -184,7 +184,7 @@ export const useBboxManager = (
           removeChunk(currentBbox);
         }
 
-        setDeletedBboxes(prev => [
+        setDeletedBboxes((prev) => [
           ...prev,
           convertToBboxData({
             ...currentBbox,

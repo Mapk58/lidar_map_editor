@@ -146,7 +146,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           </div>
 
           <div className={styles.tabs}>
-            {TABS.map(tab => (
+            {TABS.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}

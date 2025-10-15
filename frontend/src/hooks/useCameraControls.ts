@@ -34,10 +34,10 @@ export const useCameraControls = ({
         point.x,
         point.y,
         point.z,
-        true
+        true,
       );
     },
-    [cameraControlsRef, transformControllerRef]
+    [cameraControlsRef, transformControllerRef],
   );
 
   return {

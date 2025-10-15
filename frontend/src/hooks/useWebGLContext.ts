@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 export const useWebGLContext = (
-  canvasRef?: React.RefObject<HTMLCanvasElement>
+  canvasRef?: React.RefObject<HTMLCanvasElement>,
 ) => {
   useEffect(() => {
     const canvas = canvasRef?.current ?? document.querySelector("canvas");

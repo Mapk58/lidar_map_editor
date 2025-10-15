@@ -30,7 +30,7 @@ export const App = () => {
   const bboxManager = useBboxManager(
     pointCloudManager,
     transformControllerRef,
-    fillSurface
+    fillSurface,
   );
 
   const [density, setDensity] = useState<number>(100);
@@ -69,7 +69,7 @@ export const App = () => {
       clearAllData();
       await processChunks(chunks);
     },
-    [clearAllData, processChunks]
+    [clearAllData, processChunks],
   );
 
   const handleBboxCreated = useCallback(
@@ -80,7 +80,7 @@ export const App = () => {
     }) => {
       bboxManager.setBbox(bbox);
     },
-    [bboxManager]
+    [bboxManager],
   );
 
   const handleBboxSizeChanged = useCallback(
@@ -99,7 +99,7 @@ export const App = () => {
       bboxManager.setBbox(updatedBbox);
       bboxManager.markBboxAsResized();
     },
-    [bboxManager]
+    [bboxManager],
   );
 
   const handleBboxRotationChanged = useCallback(
@@ -118,7 +118,7 @@ export const App = () => {
       bboxManager.setBbox(updatedBbox);
       bboxManager.markBboxAsResized();
     },
-    [bboxManager]
+    [bboxManager],
   );
 
   const handleBboxCenterChanged = useCallback(
@@ -137,7 +137,7 @@ export const App = () => {
       bboxManager.setBbox(updatedBbox);
       bboxManager.markBboxAsResized();
     },
-    [bboxManager]
+    [bboxManager],
   );
 
   useEffect(() => {
@@ -154,12 +154,12 @@ export const App = () => {
 
     window.addEventListener(
       "bbox-size-changed",
-      onBboxSizeChanged as EventListener
+      onBboxSizeChanged as EventListener,
     );
     return () => {
       window.removeEventListener(
         "bbox-size-changed",
-        onBboxSizeChanged as EventListener
+        onBboxSizeChanged as EventListener,
       );
     };
   }, [handleBboxSizeChanged]);
@@ -178,12 +178,12 @@ export const App = () => {
 
     window.addEventListener(
       "bbox-rotation-changed",
-      onBboxRotationChanged as EventListener
+      onBboxRotationChanged as EventListener,
     );
     return () => {
       window.removeEventListener(
         "bbox-rotation-changed",
-        onBboxRotationChanged as EventListener
+        onBboxRotationChanged as EventListener,
       );
     };
   }, [handleBboxRotationChanged]);
@@ -202,27 +202,27 @@ export const App = () => {
 
     window.addEventListener(
       "bbox-center-changed",
-      onBboxCenterChanged as EventListener
+      onBboxCenterChanged as EventListener,
     );
     return () => {
       window.removeEventListener(
         "bbox-center-changed",
-        onBboxCenterChanged as EventListener
+        onBboxCenterChanged as EventListener,
       );
     };
   }, [handleBboxCenterChanged]);
 
   useEffect(() => {
-    pointCloudManager.chunks.forEach(chunk => {
+    pointCloudManager.chunks.forEach((chunk) => {
       pointCloudManager.removeChunk(chunk.id);
     });
 
-    processedChunks.forEach(chunk => {
+    processedChunks.forEach((chunk) => {
       if (chunk.originalData?.static) {
         pointCloudManager.addChunk(
           `chunk_${chunk.chunk_id}_static`,
           [],
-          `http://localhost:8000${chunk.originalData.static}`
+          `http://localhost:8000${chunk.originalData.static}`,
         );
       }
 
@@ -233,7 +233,7 @@ export const App = () => {
             [],
             `http://localhost:8000${dynamic.url}`,
             dynamic.confidence,
-            dynamic.bounding_box
+            dynamic.bounding_box,
           );
         });
       }
@@ -242,7 +242,7 @@ export const App = () => {
         pointCloudManager.addChunk(
           `chunk_${chunk.chunk_id}_ground`,
           [],
-          `http://localhost:8000${chunk.originalData.ground}`
+          `http://localhost:8000${chunk.originalData.ground}`,
         );
       }
     });

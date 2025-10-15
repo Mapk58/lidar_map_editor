@@ -20,9 +20,9 @@ export class ChunkProcessor {
    * Обрабатывает массив чанков параллельно
    */
   static async processChunks(
-    chunks: ChunkData[]
+    chunks: ChunkData[],
   ): Promise<ProcessedChunkData[]> {
-    return Promise.all(chunks.map(chunk => this.processChunk(chunk)));
+    return Promise.all(chunks.map((chunk) => this.processChunk(chunk)));
   }
 
   /**

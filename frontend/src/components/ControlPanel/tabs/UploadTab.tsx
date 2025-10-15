@@ -34,7 +34,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
 
   const effectiveError = useMemo(
     () => localError || error,
-    [localError, error]
+    [localError, error],
   );
 
   const handleTextChange = useCallback(
@@ -42,7 +42,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
       setTextInput(event.target.value);
       setLocalError(null);
     },
-    []
+    [],
   );
 
   const handleUpload = useCallback(async () => {
@@ -57,7 +57,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
     setLastJobId(trimmed);
 
     ApiService.getJobResults(trimmed)
-      .then(response => {
+      .then((response) => {
         if (!response.success || !response.data) {
           throw new Error(response.error || "Ошибка получения данных");
         }
@@ -66,7 +66,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
       .then(() => {
         setTextInput("");
       })
-      .catch(uploadError => {
+      .catch((uploadError) => {
         const message =
           uploadError instanceof Error
             ? uploadError.message
@@ -88,7 +88,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
       setSelectedFile(f);
       setLocalError(null);
     },
-    []
+    [],
   );
 
   const handleFileUpload = useCallback(() => {
@@ -99,7 +99,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
     setIsFileSubmitting(true);
     setLocalError(null);
     ApiService.processPcd(selectedFile)
-      .then(response => {
+      .then((response) => {
         if (!response.success || !response.data) {
           throw new Error(response.error || "Ошибка обработки файла");
         }
@@ -109,7 +109,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
       .then(() => {
         setSelectedFile(null);
       })
-      .catch(err => {
+      .catch((err) => {
         const message = err instanceof Error ? err.message : "Ошибка загрузки";
         setLocalError(message);
       })
@@ -133,7 +133,9 @@ export const UploadTab: React.FC<UploadTabProps> = ({
     try {
       const request = {
         job_id: lastJobId,
-        bounding_box: bboxManager.deletedBboxes.map(bbox => bbox.bounding_box),
+        bounding_box: bboxManager.deletedBboxes.map(
+          (bbox) => bbox.bounding_box,
+        ),
       };
 
       console.log("Отправка запроса экспорта:", request);

@@ -41,13 +41,13 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
   const [expandedChunks, setExpandedChunks] = useState<Set<string>>(new Set());
   const [expandedDynamic, setExpandedDynamic] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [highlightedBaseIdLocal, setHighlightedBaseIdLocal] = useState<
     string | null
   >(activeHighlightBaseId);
   const [selectedDynamicId, setSelectedDynamicId] = useState<string | null>(
-    null
+    null,
   );
 
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -58,13 +58,13 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
     setHighlightedBaseIdLocal(activeHighlightBaseId ?? null);
     if (!activeHighlightBaseId) return;
 
-    setExpandedChunks(prev => new Set(prev).add(activeHighlightBaseId));
+    setExpandedChunks((prev) => new Set(prev).add(activeHighlightBaseId));
 
     rafRef.current = requestAnimationFrame(() => {
       const container = listRef.current;
       if (!container) return;
       const header = container.querySelector(
-        `[data-base-id="${activeHighlightBaseId}"]`
+        `[data-base-id="${activeHighlightBaseId}"]`,
       ) as HTMLElement | null;
       if (header?.scrollIntoView) {
         header.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -89,8 +89,8 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       if (id && id.includes("_dynamic_")) {
         const dynBase = id.replace(/_dynamic_\d+$/, "");
         setHighlightedBaseIdLocal(dynBase);
-        setExpandedChunks(prev => new Set(prev).add(dynBase));
-        setExpandedDynamic(prev => new Set(prev).add(dynBase));
+        setExpandedChunks((prev) => new Set(prev).add(dynBase));
+        setExpandedDynamic((prev) => new Set(prev).add(dynBase));
         setSelectedDynamicId(id);
         pendingScrollIdRef.current = id;
         return;
@@ -98,12 +98,12 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
       if (baseId) {
         setHighlightedBaseIdLocal(baseId);
-        setExpandedChunks(prev => new Set(prev).add(baseId));
+        setExpandedChunks((prev) => new Set(prev).add(baseId));
         rafRef.current = requestAnimationFrame(() => {
           const container = listRef.current;
           if (!container) return;
           const header = container.querySelector(
-            `[data-base-id="${baseId}"]`
+            `[data-base-id="${baseId}"]`,
           ) as HTMLElement | null;
           if (header?.scrollIntoView) {
             header.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -133,7 +133,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       const id = pendingScrollIdRef.current;
       if (!id) return;
       const item = container.querySelector(
-        `[data-chunk-id="${id}"]`
+        `[data-chunk-id="${id}"]`,
       ) as HTMLElement | null;
       if (item && item.scrollIntoView) {
         item.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -160,8 +160,8 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       if (!id || !id.includes("_dynamic_")) return;
       const dynBase = id.replace(/_dynamic_\d+$/, "");
       setHighlightedBaseIdLocal(dynBase);
-      setExpandedChunks(prev => new Set(prev).add(dynBase));
-      setExpandedDynamic(prev => new Set(prev).add(dynBase));
+      setExpandedChunks((prev) => new Set(prev).add(dynBase));
+      setExpandedDynamic((prev) => new Set(prev).add(dynBase));
       setSelectedDynamicId(id);
       pendingScrollIdRef.current = id;
     };
@@ -169,14 +169,14 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
     return () => {
       window.removeEventListener(
         "pcd-pulse-chunk",
-        onPulseChunk as EventListener
+        onPulseChunk as EventListener,
       );
     };
   }, []);
 
   const highlightedBaseIds = useMemo(
     () => new Set(highlightedBaseIdLocal ? [highlightedBaseIdLocal] : []),
-    [highlightedBaseIdLocal]
+    [highlightedBaseIdLocal],
   );
 
   const isChunkHighlighted = useCallback(
@@ -184,7 +184,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       const baseId = id.replace(/(_ground|_static|_dynamic_\d+)$/, "");
       return highlightedBaseIdLocal === baseId;
     },
-    [highlightedBaseIdLocal]
+    [highlightedBaseIdLocal],
   );
 
   const isCameraOnChunk = useCallback(
@@ -209,7 +209,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
       return distanceToCenter <= radius && targetDistanceToCenter <= radius;
     },
-    [cameraControlsRef]
+    [cameraControlsRef],
   );
 
   const getChunkCenter = useCallback((chunk: PointChunk) => {
@@ -226,7 +226,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
         return;
       }
 
-      const chunk = pointCloudManager.chunks.find(c => c.id === chunkId);
+      const chunk = pointCloudManager.chunks.find((c) => c.id === chunkId);
       if (!chunk || !chunk.mesh) return;
 
       const baseId = chunkId.replace(/(_ground|_static|_dynamic_\d+)$/, "");
@@ -235,11 +235,11 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
         window.dispatchEvent(
           new CustomEvent("pcd-pulse-chunk", {
             detail: { id: chunkId, color: 0xffffff },
-          })
+          }),
         );
       } else {
         window.dispatchEvent(
-          new CustomEvent("pcd-pulse", { detail: { baseId } })
+          new CustomEvent("pcd-pulse", { detail: { baseId } }),
         );
       }
 
@@ -270,7 +270,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
           center.x,
           center.y,
           center.z,
-          true
+          true,
         );
       }, MOVE_DELAY_MS);
     },
@@ -280,7 +280,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       getChunkCenter,
       isCameraOnChunk,
       pointCloudManager.chunks,
-    ]
+    ],
   );
 
   const focusOnChunkGroup = useCallback(
@@ -291,14 +291,14 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
       setHighlightedBaseIdLocal(baseId);
       window.dispatchEvent(
-        new CustomEvent("pcd-pulse", { detail: { baseId } })
+        new CustomEvent("pcd-pulse", { detail: { baseId } }),
       );
 
       const chunksForGroup = pointCloudManager.chunks.filter(
-        chunk =>
+        (chunk) =>
           chunk.id === `${baseId}_ground` ||
           chunk.id === `${baseId}_static` ||
-          chunk.id.startsWith(`${baseId}_dynamic_`)
+          chunk.id.startsWith(`${baseId}_dynamic_`),
       );
 
       const centers = chunksForGroup
@@ -309,7 +309,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
       const boundingBox = centers.reduce(
         (acc, center) => acc.expandByPoint(center),
-        new THREE.Box3()
+        new THREE.Box3(),
       );
       const center = boundingBox.getCenter(new THREE.Vector3());
 
@@ -333,7 +333,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
           center.x,
           center.y,
           center.z,
-          true
+          true,
         );
       }, MOVE_DELAY_MS);
     },
@@ -342,11 +342,11 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       transformControllerRef,
       getChunkCenter,
       pointCloudManager.chunks,
-    ]
+    ],
   );
 
   const toggleChunk = useCallback((chunkId: string) => {
-    setExpandedChunks(prev => {
+    setExpandedChunks((prev) => {
       const next = new Set(prev);
       if (next.has(chunkId)) {
         next.delete(chunkId);
@@ -358,7 +358,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
   }, []);
 
   const toggleDynamicGroup = useCallback((baseId: string) => {
-    setExpandedDynamic(prev => {
+    setExpandedDynamic((prev) => {
       const next = new Set(prev);
       if (next.has(baseId)) {
         next.delete(baseId);
@@ -371,16 +371,16 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
   const toggleVisibility = useCallback(
     (chunkId: string) => {
-      const chunk = pointCloudManager.chunks.find(c => c.id === chunkId);
+      const chunk = pointCloudManager.chunks.find((c) => c.id === chunkId);
       if (!chunk) return;
       setChunkVisibility(chunkId, !chunk.visible);
     },
-    [pointCloudManager, setChunkVisibility]
+    [pointCloudManager, setChunkVisibility],
   );
 
   const toggleDynamicVisibility = useCallback(
     (baseId: string, visible: boolean) => {
-      pointCloudManager.chunks.forEach(chunk => {
+      pointCloudManager.chunks.forEach((chunk) => {
         if (!chunk.id.includes("_dynamic_")) return;
         const chunkBaseId = chunk.id.replace(/_dynamic_\d+$/, "");
         if (chunkBaseId === baseId) {
@@ -388,7 +388,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
         }
       });
     },
-    [pointCloudManager, setChunkVisibility]
+    [pointCloudManager, setChunkVisibility],
   );
 
   const groupedChunks = useMemo(() => {
@@ -423,7 +423,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
   const chunkEntries = useMemo<ChunkGroupEntry[]>(
     () => Object.entries(groupedChunks),
-    [groupedChunks]
+    [groupedChunks],
   );
 
   if (chunkEntries.length === 0) {
@@ -554,7 +554,7 @@ const ChunkGroupHeader: React.FC<ChunkGroupHeaderProps> = ({
     <div className={styles.chunkGroupActions}>
       <button
         className={`${styles.actionButton} ${styles.focusButton} ${styles.groupActionButton}`}
-        onClick={event => {
+        onClick={(event) => {
           event.stopPropagation();
           onFocus(baseId);
         }}
@@ -675,7 +675,7 @@ const DynamicChunkGroup: React.FC<DynamicChunkGroupProps> = ({
   setSelectedDynamicId,
   confidenceThreshold,
 }) => {
-  const isVisible = chunks.every(chunk => chunk.visible);
+  const isVisible = chunks.every((chunk) => chunk.visible);
   return (
     <div className={styles.dynamicGroup}>
       <div className={styles.dynamicHeader}>
@@ -703,7 +703,7 @@ const DynamicChunkGroup: React.FC<DynamicChunkGroupProps> = ({
               key={chunk.id}
               chunk={chunk}
               onToggleVisibility={onToggleChunkVisibility}
-              onFocus={id => {
+              onFocus={(id) => {
                 onFocusChunk(id);
                 setSelectedDynamicId(id);
               }}

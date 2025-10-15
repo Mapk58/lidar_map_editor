@@ -31,7 +31,7 @@ export const BboxActionPanel: React.FC<BboxActionPanelProps> = ({
         <input
           type="checkbox"
           checked={fillSurface}
-          onChange={e => onFillSurfaceChange(e.target.checked)}
+          onChange={(e) => onFillSurfaceChange(e.target.checked)}
         />
         Заполнить поверхность
       </label>

@@ -28,15 +28,15 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
   const { setChunkVisibility } = pointCloudManager;
 
   const [selectedDynamicId, setSelectedDynamicId] = useState<string | null>(
-    null
+    null,
   );
 
   const listRef = useRef<HTMLDivElement | null>(null);
   const pendingScrollIdRef = useRef<string | null>(null);
 
   const dynamicChunks = useMemo<PointChunk[]>(
-    () => pointCloudManager.chunks.filter(c => c.id.includes("_dynamic_")),
-    [pointCloudManager.chunks]
+    () => pointCloudManager.chunks.filter((c) => c.id.includes("_dynamic_")),
+    [pointCloudManager.chunks],
   );
 
   const getChunkCenter = useCallback((chunk: PointChunk) => {
@@ -51,13 +51,13 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
       if (!cameraControlsRef?.current || !transformControllerRef?.current) {
         return;
       }
-      const chunk = pointCloudManager.chunks.find(c => c.id === chunkId);
+      const chunk = pointCloudManager.chunks.find((c) => c.id === chunkId);
       if (!chunk || !chunk.mesh) return;
 
       window.dispatchEvent(
         new CustomEvent("pcd-pulse-chunk", {
           detail: { id: chunkId, color: 0xffffff },
-        })
+        }),
       );
 
       const center = getChunkCenter(chunk);
@@ -78,7 +78,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
         center.x,
         center.y,
         center.z,
-        true
+        true,
       );
     },
     [
@@ -86,7 +86,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
       transformControllerRef,
       pointCloudManager.chunks,
       getChunkCenter,
-    ]
+    ],
   );
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
     return () =>
       window.removeEventListener(
         "pcd-pulse-chunk",
-        onPulseChunk as EventListener
+        onPulseChunk as EventListener,
       );
   }, []);
 
@@ -117,7 +117,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
       const id = pendingScrollIdRef.current;
       if (!id) return;
       const item = container.querySelector(
-        `[data-chunk-id="${id}"]`
+        `[data-chunk-id="${id}"]`,
       ) as HTMLElement | null;
       if (item && item.scrollIntoView) {
         item.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -194,7 +194,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
                   className={`${styles.actionButton} ${
                     isVisible ? styles.visible : styles.hidden
                   }`}
-                  onClick={e => {
+                  onClick={(e) => {
                     e.stopPropagation();
                     setChunkVisibility(chunk.id, !isVisible);
                   }}

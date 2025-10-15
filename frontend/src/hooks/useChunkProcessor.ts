@@ -15,7 +15,7 @@ type UseChunkProcessorReturn = {
 
 export const useChunkProcessor = (): UseChunkProcessorReturn => {
   const [processedChunks, setProcessedChunks] = useState<ProcessedChunkData[]>(
-    []
+    [],
   );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,10 +31,10 @@ export const useChunkProcessor = (): UseChunkProcessorReturn => {
     setProcessedChunks([]);
 
     ChunkProcessor.processChunks(chunks)
-      .then(processed => {
+      .then((processed) => {
         setProcessedChunks(processed);
       })
-      .catch(err => {
+      .catch((err) => {
         const errorMessage =
           err instanceof Error ? err.message : "Неизвестная ошибка";
         setError(errorMessage);

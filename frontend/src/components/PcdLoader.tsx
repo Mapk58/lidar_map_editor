@@ -89,7 +89,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
     let geometry: THREE.BufferGeometry = points.geometry;
     if (targetPercent < 0.999) {
       const pos = points.geometry.getAttribute(
-        "position"
+        "position",
       ) as THREE.BufferAttribute;
       const count = pos.count;
       const indices = new Uint32Array(count);
@@ -112,7 +112,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
       const newGeom = new THREE.BufferGeometry();
       newGeom.setAttribute(
         "position",
-        new THREE.BufferAttribute(newPositions, 3)
+        new THREE.BufferAttribute(newPositions, 3),
       );
       geometry = newGeom;
     }
@@ -154,8 +154,8 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
   const bboxGroupRef = useRef<THREE.Group | null>(null);
 
   const currentChunk = useMemo(
-    () => pointCloudManager.chunks.find(c => c.id === chunkId),
-    [pointCloudManager.chunks, chunkId]
+    () => pointCloudManager.chunks.find((c) => c.id === chunkId),
+    [pointCloudManager.chunks, chunkId],
   );
 
   const disposeBbox = useCallback(() => {
@@ -207,7 +207,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
           window.dispatchEvent(
             new CustomEvent("pcd-bbox-ref", {
               detail: { id: chunkId, object: bboxGroupRef.current! },
-            })
+            }),
           );
         });
       }
@@ -237,7 +237,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
         mat.color.set(0xffffff);
         const highlightSize = Math.max(
           baseSizeRef.current * 1.5,
-          baseSizeRef.current + 0.8
+          baseSizeRef.current + 0.8,
         );
         mat.size = highlightSize;
         mat.vertexColors = false;
@@ -261,12 +261,12 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
         if (mat) {
           const colorDetail = e.detail.color ?? 0xffffff;
           flashColorRef.current.set(
-            colorDetail as unknown as THREE.ColorRepresentation
+            colorDetail as unknown as THREE.ColorRepresentation,
           );
           mat.color.set(flashColorRef.current);
           const highlightSize = Math.max(
             baseSizeRef.current * 1.5,
-            baseSizeRef.current + 0.8
+            baseSizeRef.current + 0.8,
           );
           mat.size = highlightSize;
           mat.vertexColors = false;
@@ -288,7 +288,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
     return () =>
       window.removeEventListener(
         "pcd-pulse-chunk",
-        onPulseChunk as EventListener
+        onPulseChunk as EventListener,
       );
   }, [
     chunkId,
@@ -308,7 +308,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
       const t = THREE.MathUtils.clamp(
         (now - fadeStartRef.current) / fadeDurationMsRef.current,
         0,
-        1
+        1,
       );
       const fromColor = flashColorRef.current;
       const toColor = baseColorRef.current;
@@ -316,7 +316,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
       mat.color.copy(tempColor);
       const highlightSize = Math.max(
         baseSizeRef.current * 1.5,
-        baseSizeRef.current + 0.8
+        baseSizeRef.current + 0.8,
       );
       mat.size = THREE.MathUtils.lerp(highlightSize, baseSizeRef.current, t);
       if (t >= 1) {
@@ -354,7 +354,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
         window.dispatchEvent(
           new CustomEvent("pcd-pulse-chunk", {
             detail: { id: chunkId, color: 0xffffff },
-          })
+          }),
         );
       } else {
         window.dispatchEvent(
@@ -363,7 +363,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
               baseId,
               point: targetPoint,
             },
-          })
+          }),
         );
       }
 
@@ -373,7 +373,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
         moveTimeoutRef.current = null;
       }, MOVE_DELAY_MS);
     },
-    [pointsObject, chunkId, disposeTimeout, baseId, smoothMoveToPoint]
+    [pointsObject, chunkId, disposeTimeout, baseId, smoothMoveToPoint],
   );
 
   if (!pointsObject) {

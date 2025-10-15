@@ -32,7 +32,7 @@ export class ApiService {
         success: true,
         data: response.data,
       }))
-      .catch(error => ({
+      .catch((error) => ({
         success: false,
         error: error instanceof Error ? error.message : "Неизвестная ошибка",
       }));
@@ -53,7 +53,7 @@ export class ApiService {
         success: true,
         data: response.data,
       }))
-      .catch(error => ({
+      .catch((error) => ({
         success: false,
         error: error instanceof Error ? error.message : "Неизвестная ошибка",
       }));
@@ -63,7 +63,7 @@ export class ApiService {
    * Экспортировать PCD файл с удаленными областями
    */
   static exportPcd(
-    request: ExportPcdRequest
+    request: ExportPcdRequest,
   ): Promise<ApiResponse<ExportPcdResponse>> {
     console.log("ApiService.exportPcd: Sending POST request to /results");
     console.log("ApiService.exportPcd: Request data:", request);
@@ -76,7 +76,7 @@ export class ApiService {
           data: response.data,
         };
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("ApiService.exportPcd: Error occurred:", error);
         return {
           success: false,
@@ -94,15 +94,15 @@ export class ApiService {
       .get(url, {
         responseType: "blob",
       })
-      .then(response => {
+      .then((response) => {
         console.log(
           "ApiService.downloadPcd: File downloaded successfully, size:",
           response.data.size,
-          "bytes"
+          "bytes",
         );
         return response.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("ApiService.downloadPcd: Download error:", error);
         throw error;
       });

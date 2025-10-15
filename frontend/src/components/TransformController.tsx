@@ -15,7 +15,7 @@ function getBoundingBoxData(target: THREE.Group | null) {
   let bboxObj = target;
   if (!target.userData?.apiBounding) {
     const bboxChild = target.children.find(
-      child => child.userData?.apiBounding
+      (child) => child.userData?.apiBounding,
     ) as THREE.Group | undefined;
     if (bboxChild) bboxObj = bboxChild;
     else return null;
@@ -24,7 +24,7 @@ function getBoundingBoxData(target: THREE.Group | null) {
   const baseSize = new THREE.Vector3(
     apiBounding.size[0],
     apiBounding.size[1],
-    apiBounding.size[2]
+    apiBounding.size[2],
   );
   const worldScale = new THREE.Vector3();
   bboxObj.getWorldScale(worldScale);
@@ -63,7 +63,7 @@ export const TransformController: React.FC<Props> = ({
   useEffect(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key !== "Shift") return;
-      setCurrentMode(prev => nextMode(prev));
+      setCurrentMode((prev) => nextMode(prev));
     };
     window.addEventListener("keyup", handleKeyUp);
     return () => {
@@ -78,7 +78,7 @@ export const TransformController: React.FC<Props> = ({
 
   const shouldShow = useMemo(
     () => !!visible && !(hideInTranslateMode && currentMode === "translate"),
-    [visible, currentMode, hideInTranslateMode]
+    [visible, currentMode, hideInTranslateMode],
   );
 
   const onTcMouseUp = useCallback(() => {

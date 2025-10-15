@@ -23,7 +23,8 @@ const EDGES_CONTAINER_NAME = "bbox-edges";
 
 const getEdgesContainer = (group: THREE.Group): THREE.Group => {
   let container = group.children.find(
-    c => c.type === "Group" && (c as THREE.Group).name === EDGES_CONTAINER_NAME
+    (c) =>
+      c.type === "Group" && (c as THREE.Group).name === EDGES_CONTAINER_NAME,
   ) as THREE.Group | undefined;
   if (!container) {
     container = new THREE.Group();
@@ -69,7 +70,7 @@ export const createBboxGroup = (params: BboxCreateParams): THREE.Group => {
     edgeRadius,
     edgeRadius,
     1,
-    edgeSegments
+    edgeSegments,
   );
   const edgeMaterial = new THREE.MeshBasicMaterial({
     color: materialColor,
@@ -87,7 +88,7 @@ export const createBboxGroup = (params: BboxCreateParams): THREE.Group => {
     mesh.scale.set(1, len, 1);
     const quat = new THREE.Quaternion().setFromUnitVectors(
       new THREE.Vector3(0, 1, 0),
-      dir.clone().normalize()
+      dir.clone().normalize(),
     );
     mesh.setRotationFromQuaternion(quat);
     mesh.position.copy(mid);
@@ -141,12 +142,12 @@ export const createBboxGroup = (params: BboxCreateParams): THREE.Group => {
     parentQuat.identity();
   }
   const localQuat = new THREE.Quaternion().setFromEuler(
-    new THREE.Euler(0, 0, yaw)
+    new THREE.Euler(0, 0, yaw),
   );
   const worldQuat = parentQuat.clone().multiply(localQuat);
   group.setRotationFromQuaternion(worldQuat);
 
-  group.traverse(obj => {
+  group.traverse((obj) => {
     (obj as THREE.Object3D).raycast = () => undefined;
   });
 
@@ -154,7 +155,7 @@ export const createBboxGroup = (params: BboxCreateParams): THREE.Group => {
 };
 
 export const disposeThreeObject = (obj: THREE.Object3D) => {
-  obj.traverse(child => {
+  obj.traverse((child) => {
     const mesh = child as unknown as {
       geometry?: THREE.BufferGeometry;
       material?: THREE.Material | THREE.Material[];
@@ -166,7 +167,7 @@ export const disposeThreeObject = (obj: THREE.Object3D) => {
       | THREE.Material
       | THREE.Material[]
       | undefined;
-    if (Array.isArray(material)) material.forEach(m => m.dispose());
+    if (Array.isArray(material)) material.forEach((m) => m.dispose());
     else if (material) material.dispose();
   });
   if (obj.parent) obj.parent.remove(obj);
@@ -210,7 +211,7 @@ export const rebuildEdges = (group: THREE.Group, size: THREE.Vector3) => {
     edgeRadius,
     edgeRadius,
     1,
-    edgeSegments
+    edgeSegments,
   );
   const edgeMaterial = new THREE.MeshBasicMaterial({
     color,
@@ -243,7 +244,7 @@ export const rebuildEdges = (group: THREE.Group, size: THREE.Vector3) => {
     mesh.scale.set(1, len, 1);
     const quat = new THREE.Quaternion().setFromUnitVectors(
       new THREE.Vector3(0, 1, 0),
-      dir.clone().normalize()
+      dir.clone().normalize(),
     );
     mesh.setRotationFromQuaternion(quat);
     mesh.position.copy(mid);
@@ -269,7 +270,7 @@ export const rebuildEdges = (group: THREE.Group, size: THREE.Vector3) => {
 export const applyOneSidedResize = (
   group: THREE.Group,
   axis: BboxAxis,
-  delta: number
+  delta: number,
 ) => {
   const minSize = 0.05;
   const size = getBboxSize(group);
