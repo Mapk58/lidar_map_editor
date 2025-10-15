@@ -1,16 +1,16 @@
-import { CameraControls } from '@react-three/drei';
+import { CameraControls } from "@react-three/drei";
 import React, {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from 'react';
-import * as THREE from 'three';
+} from "react";
+import * as THREE from "three";
 
-import type { PointChunk, PointCloudManager } from '../../../types/pointCloud';
+import type { PointChunk, PointCloudManager } from "../../../types/pointCloud";
 
-import styles from '../ControlPanel.module.css';
+import styles from "../ControlPanel.module.css";
 
 const MOVE_DELAY_MS = 150;
 
@@ -67,7 +67,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
         `[data-base-id="${activeHighlightBaseId}"]`
       ) as HTMLElement | null;
       if (header?.scrollIntoView) {
-        header.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        header.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
 
@@ -86,8 +86,8 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       const id = e?.detail?.id;
       if (!baseId && !id) return;
 
-      if (id && id.includes('_dynamic_')) {
-        const dynBase = id.replace(/_dynamic_\d+$/, '');
+      if (id && id.includes("_dynamic_")) {
+        const dynBase = id.replace(/_dynamic_\d+$/, "");
         setHighlightedBaseIdLocal(dynBase);
         setExpandedChunks(prev => new Set(prev).add(dynBase));
         setExpandedDynamic(prev => new Set(prev).add(dynBase));
@@ -106,14 +106,14 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
             `[data-base-id="${baseId}"]`
           ) as HTMLElement | null;
           if (header?.scrollIntoView) {
-            header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            header.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         });
       }
     };
-    window.addEventListener('pcd-pulse', onPulse as EventListener);
+    window.addEventListener("pcd-pulse", onPulse as EventListener);
     return () => {
-      window.removeEventListener('pcd-pulse', onPulse as EventListener);
+      window.removeEventListener("pcd-pulse", onPulse as EventListener);
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
@@ -136,7 +136,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
         `[data-chunk-id="${id}"]`
       ) as HTMLElement | null;
       if (item && item.scrollIntoView) {
-        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        item.scrollIntoView({ behavior: "smooth", block: "center" });
         pendingScrollIdRef.current = null;
         if (observer) observer.disconnect();
       }
@@ -157,18 +157,18 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
     const onPulseChunk = (evt: Event) => {
       const e = evt as CustomEvent<{ id: string }>;
       const id = e?.detail?.id;
-      if (!id || !id.includes('_dynamic_')) return;
-      const dynBase = id.replace(/_dynamic_\d+$/, '');
+      if (!id || !id.includes("_dynamic_")) return;
+      const dynBase = id.replace(/_dynamic_\d+$/, "");
       setHighlightedBaseIdLocal(dynBase);
       setExpandedChunks(prev => new Set(prev).add(dynBase));
       setExpandedDynamic(prev => new Set(prev).add(dynBase));
       setSelectedDynamicId(id);
       pendingScrollIdRef.current = id;
     };
-    window.addEventListener('pcd-pulse-chunk', onPulseChunk as EventListener);
+    window.addEventListener("pcd-pulse-chunk", onPulseChunk as EventListener);
     return () => {
       window.removeEventListener(
-        'pcd-pulse-chunk',
+        "pcd-pulse-chunk",
         onPulseChunk as EventListener
       );
     };
@@ -181,7 +181,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
   const isChunkHighlighted = useCallback(
     (id: string) => {
-      const baseId = id.replace(/(_ground|_static|_dynamic_\d+)$/, '');
+      const baseId = id.replace(/(_ground|_static|_dynamic_\d+)$/, "");
       return highlightedBaseIdLocal === baseId;
     },
     [highlightedBaseIdLocal]
@@ -229,17 +229,17 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
       const chunk = pointCloudManager.chunks.find(c => c.id === chunkId);
       if (!chunk || !chunk.mesh) return;
 
-      const baseId = chunkId.replace(/(_ground|_static|_dynamic_\d+)$/, '');
+      const baseId = chunkId.replace(/(_ground|_static|_dynamic_\d+)$/, "");
       setHighlightedBaseIdLocal(baseId);
-      if (chunkId.includes('_dynamic_')) {
+      if (chunkId.includes("_dynamic_")) {
         window.dispatchEvent(
-          new CustomEvent('pcd-pulse-chunk', {
+          new CustomEvent("pcd-pulse-chunk", {
             detail: { id: chunkId, color: 0xffffff },
           })
         );
       } else {
         window.dispatchEvent(
-          new CustomEvent('pcd-pulse', { detail: { baseId } })
+          new CustomEvent("pcd-pulse", { detail: { baseId } })
         );
       }
 
@@ -291,7 +291,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
       setHighlightedBaseIdLocal(baseId);
       window.dispatchEvent(
-        new CustomEvent('pcd-pulse', { detail: { baseId } })
+        new CustomEvent("pcd-pulse", { detail: { baseId } })
       );
 
       const chunksForGroup = pointCloudManager.chunks.filter(
@@ -381,8 +381,8 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
   const toggleDynamicVisibility = useCallback(
     (baseId: string, visible: boolean) => {
       pointCloudManager.chunks.forEach(chunk => {
-        if (!chunk.id.includes('_dynamic_')) return;
-        const chunkBaseId = chunk.id.replace(/_dynamic_\d+$/, '');
+        if (!chunk.id.includes("_dynamic_")) return;
+        const chunkBaseId = chunk.id.replace(/_dynamic_\d+$/, "");
         if (chunkBaseId === baseId) {
           setChunkVisibility(chunk.id, visible);
         }
@@ -395,12 +395,12 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
     return pointCloudManager.chunks.reduce<ChunkGroupRecord>((acc, chunk) => {
       let baseId: string;
 
-      if (chunk.id.endsWith('_ground')) {
-        baseId = chunk.id.replace('_ground', '');
-      } else if (chunk.id.endsWith('_static')) {
-        baseId = chunk.id.replace('_static', '');
-      } else if (chunk.id.includes('_dynamic_')) {
-        baseId = chunk.id.replace(/_dynamic_\d+$/, '');
+      if (chunk.id.endsWith("_ground")) {
+        baseId = chunk.id.replace("_ground", "");
+      } else if (chunk.id.endsWith("_static")) {
+        baseId = chunk.id.replace("_static", "");
+      } else if (chunk.id.includes("_dynamic_")) {
+        baseId = chunk.id.replace(/_dynamic_\d+$/, "");
       } else {
         return acc;
       }
@@ -409,11 +409,11 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
         acc[baseId] = { ground: null, static: null, dynamic: [] };
       }
 
-      if (chunk.id.endsWith('_ground')) {
+      if (chunk.id.endsWith("_ground")) {
         acc[baseId].ground = chunk;
-      } else if (chunk.id.endsWith('_static')) {
+      } else if (chunk.id.endsWith("_static")) {
         acc[baseId].static = chunk;
-      } else if (chunk.id.includes('_dynamic_')) {
+      } else if (chunk.id.includes("_dynamic_")) {
         acc[baseId].dynamic.push(chunk);
       }
 
@@ -443,7 +443,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
           <div
             key={baseId}
             className={`${styles.chunkGroup} ${
-              highlightedBaseIds.has(baseId) ? styles.highlightedGroup : ''
+              highlightedBaseIds.has(baseId) ? styles.highlightedGroup : ""
             }`}
             data-base-id={baseId}
           >
@@ -457,7 +457,7 @@ export const ChunksTab: React.FC<ChunksTabProps> = ({
 
             {expandedChunks.has(baseId) && (
               <div
-                className={`${styles.chunkContent} ${chunks.dynamic.length > 0 ? styles.hasDynamic : ''}`}
+                className={`${styles.chunkContent} ${chunks.dynamic.length > 0 ? styles.hasDynamic : ""}`}
               >
                 {chunks.ground && chunks.static ? (
                   <div className={styles.inlineRow}>
@@ -548,7 +548,7 @@ const ChunkGroupHeader: React.FC<ChunkGroupHeaderProps> = ({
       onClick={() => onToggle(baseId)}
     >
       <span>
-        {expanded ? '▼' : '▶'} Чанк {baseId} ({dynamicChunksCount})
+        {expanded ? "▼" : "▶"} Чанк {baseId} ({dynamicChunksCount})
       </span>
     </button>
     <div className={styles.chunkGroupActions}>
@@ -595,27 +595,27 @@ const ChunkItem: React.FC<ChunkItemProps> = ({
   let confidenceColor: string | undefined;
   if (
     isDynamic &&
-    typeof confidence === 'number' &&
-    typeof confidenceThreshold === 'number'
+    typeof confidence === "number" &&
+    typeof confidenceThreshold === "number"
   ) {
     const thr = Math.max(0, Math.min(1, confidenceThreshold));
-    confidenceColor = confidence > thr ? '#ff4d4f' : '#ffff00';
+    confidenceColor = confidence > thr ? "#ff4d4f" : "#ffff00";
   }
 
   return (
     <div
-      className={`${styles.chunkItem} ${isNested ? styles.nested : ''} ${
+      className={`${styles.chunkItem} ${isNested ? styles.nested : ""} ${
         isHighlighted
-          ? `${styles.highlightedItem} ${isDynamic ? styles.selectedDynamicItem : ''}`
-          : ''
-      } ${compact ? styles.compact : ''}`}
+          ? `${styles.highlightedItem} ${isDynamic ? styles.selectedDynamicItem : ""}`
+          : ""
+      } ${compact ? styles.compact : ""}`}
       data-chunk-id={chunk.id}
     >
       <div className={styles.chunkInfo}>
         <span className={styles.chunkType}>{type}</span>
         <span className={styles.chunkId}>{chunk.id}</span>
         <span className={styles.chunkPoints}>{pointCount} точек</span>
-        {isDynamic && typeof confidence === 'number' && (
+        {isDynamic && typeof confidence === "number" && (
           <span
             className={styles.chunkPoints}
             style={{ color: confidenceColor }}
@@ -641,10 +641,10 @@ const ChunkItem: React.FC<ChunkItemProps> = ({
             isVisible ? styles.visible : styles.hidden
           }`}
           onClick={() => onToggleVisibility(chunk.id)}
-          title={isVisible ? 'Скрыть' : 'Показать'}
+          title={isVisible ? "Скрыть" : "Показать"}
           type="button"
         >
-          {isVisible ? '👁️' : '🙈'}
+          {isVisible ? "👁️" : "🙈"}
         </button>
       </div>
     </div>
@@ -681,7 +681,7 @@ const DynamicChunkGroup: React.FC<DynamicChunkGroupProps> = ({
       <div className={styles.dynamicHeader}>
         <button className={styles.dynamicTitleButton} onClick={onToggle}>
           <span>
-            {expanded ? '▼' : '▶'} Динамика ({chunks.length})
+            {expanded ? "▼" : "▶"} Динамика ({chunks.length})
           </span>
         </button>
         <div className={styles.dynamicActions}>
@@ -690,9 +690,9 @@ const DynamicChunkGroup: React.FC<DynamicChunkGroupProps> = ({
               isVisible ? styles.visible : styles.hidden
             }`}
             onClick={() => onToggleVisibility(baseId, !isVisible)}
-            title={isVisible ? 'Скрыть' : 'Показать'}
+            title={isVisible ? "Скрыть" : "Показать"}
           >
-            {isVisible ? '👁️' : '🙈'}
+            {isVisible ? "👁️" : "🙈"}
           </button>
         </div>
       </div>

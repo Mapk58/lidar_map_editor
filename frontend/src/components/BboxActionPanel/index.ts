@@ -1,1 +1,1 @@
-export { BboxActionPanel } from './BboxActionPanel';
+export { BboxActionPanel } from "./BboxActionPanel";

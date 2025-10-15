@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 export const useWebGLContext = (
   canvasRef?: React.RefObject<HTMLCanvasElement>
 ) => {
   useEffect(() => {
-    const canvas = canvasRef?.current ?? document.querySelector('canvas');
+    const canvas = canvasRef?.current ?? document.querySelector("canvas");
     if (!canvas) return;
 
     const handleContextLost = (event: Event) => {
@@ -12,15 +12,15 @@ export const useWebGLContext = (
     };
 
     const handleContextRestored = () => {
-      canvas.dispatchEvent(new Event('webglcontextrestored-custom'));
+      canvas.dispatchEvent(new Event("webglcontextrestored-custom"));
     };
 
-    canvas.addEventListener('webglcontextlost', handleContextLost);
-    canvas.addEventListener('webglcontextrestored', handleContextRestored);
+    canvas.addEventListener("webglcontextlost", handleContextLost);
+    canvas.addEventListener("webglcontextrestored", handleContextRestored);
 
     return () => {
-      canvas.removeEventListener('webglcontextlost', handleContextLost);
-      canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+      canvas.removeEventListener("webglcontextlost", handleContextLost);
+      canvas.removeEventListener("webglcontextrestored", handleContextRestored);
     };
   }, [canvasRef]);
 };

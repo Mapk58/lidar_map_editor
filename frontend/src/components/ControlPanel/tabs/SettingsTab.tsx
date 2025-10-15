@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import { Slider } from '../../Slider/Slider';
-import styles from '../ControlPanel.module.css';
+import { Slider } from "../../Slider/Slider";
+import styles from "../ControlPanel.module.css";
 
 type SettingsTabProps = {
   confidenceThreshold: number;

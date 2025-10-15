@@ -1,24 +1,24 @@
-import { CameraControls } from '@react-three/drei';
-import { type ThreeEvent, useFrame, useLoader } from '@react-three/fiber';
+import { CameraControls } from "@react-three/drei";
+import { type ThreeEvent, useFrame, useLoader } from "@react-three/fiber";
 import React, {
   useMemo,
   useCallback,
   useEffect,
   useRef,
   useState,
-} from 'react';
-import * as THREE from 'three';
-import { PCDLoader } from 'three/addons/loaders/PCDLoader.js';
+} from "react";
+import * as THREE from "three";
+import { PCDLoader } from "three/addons/loaders/PCDLoader.js";
 
-import type { PointCloudManager } from '../types/pointCloud';
+import type { PointCloudManager } from "../types/pointCloud";
 
-import { useCameraControls } from '../hooks/useCameraControls';
-import { createBboxGroup, disposeThreeObject } from '../utils/bbox';
+import { useCameraControls } from "../hooks/useCameraControls";
+import { createBboxGroup, disposeThreeObject } from "../utils/bbox";
 
 const MOVE_DELAY_MS = 150;
 
 const normalizeChunkId = (chunkId: string) =>
-  chunkId.replace(/(_ground|_static|_dynamic_\d+)$/, '');
+  chunkId.replace(/(_ground|_static|_dynamic_\d+)$/, "");
 
 type PcdLoaderProps = {
   url: string;
@@ -35,7 +35,7 @@ type PcdLoaderProps = {
 export const PcdLoader: React.FC<PcdLoaderProps> = ({
   url,
   pointSize = 0.1,
-  color = '#ffffff',
+  color = "#ffffff",
   visible = true,
   pointCloudManager,
   chunkId,
@@ -89,7 +89,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
     let geometry: THREE.BufferGeometry = points.geometry;
     if (targetPercent < 0.999) {
       const pos = points.geometry.getAttribute(
-        'position'
+        "position"
       ) as THREE.BufferAttribute;
       const count = pos.count;
       const indices = new Uint32Array(count);
@@ -111,7 +111,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
       }
       const newGeom = new THREE.BufferGeometry();
       newGeom.setAttribute(
-        'position',
+        "position",
         new THREE.BufferAttribute(newPositions, 3)
       );
       geometry = newGeom;
@@ -205,16 +205,16 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
         }
         requestAnimationFrame(() => {
           window.dispatchEvent(
-            new CustomEvent('pcd-bbox-ref', {
+            new CustomEvent("pcd-bbox-ref", {
               detail: { id: chunkId, object: bboxGroupRef.current! },
             })
           );
         });
       }
     };
-    window.addEventListener('pcd-bind-bbox', onBindBbox as EventListener);
+    window.addEventListener("pcd-bind-bbox", onBindBbox as EventListener);
     return () =>
-      window.removeEventListener('pcd-bind-bbox', onBindBbox as EventListener);
+      window.removeEventListener("pcd-bind-bbox", onBindBbox as EventListener);
   }, [chunkId, currentChunk, attachOrUpdateBboxFromApi, pointsObject]);
 
   useEffect(() => {
@@ -244,9 +244,9 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
         mat.needsUpdate = true;
       }
     };
-    window.addEventListener('pcd-pulse', onPulse as EventListener);
+    window.addEventListener("pcd-pulse", onPulse as EventListener);
     return () =>
-      window.removeEventListener('pcd-pulse', onPulse as EventListener);
+      window.removeEventListener("pcd-pulse", onPulse as EventListener);
   }, [baseId, pointsObject]);
 
   useEffect(() => {
@@ -276,7 +276,7 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
       }
 
       if (!currentChunk) return;
-      const isDynamic = currentChunk.id.includes('_dynamic_');
+      const isDynamic = currentChunk.id.includes("_dynamic_");
       if (!isDynamic) return;
       if (id === chunkId) {
         attachOrUpdateBboxFromApi();
@@ -284,10 +284,10 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
         disposeBbox();
       }
     };
-    window.addEventListener('pcd-pulse-chunk', onPulseChunk as EventListener);
+    window.addEventListener("pcd-pulse-chunk", onPulseChunk as EventListener);
     return () =>
       window.removeEventListener(
-        'pcd-pulse-chunk',
+        "pcd-pulse-chunk",
         onPulseChunk as EventListener
       );
   }, [
@@ -350,15 +350,15 @@ export const PcdLoader: React.FC<PcdLoaderProps> = ({
       const targetPoint = event.point?.clone();
       if (!targetPoint) return;
 
-      if (chunkId.includes('_dynamic_')) {
+      if (chunkId.includes("_dynamic_")) {
         window.dispatchEvent(
-          new CustomEvent('pcd-pulse-chunk', {
+          new CustomEvent("pcd-pulse-chunk", {
             detail: { id: chunkId, color: 0xffffff },
           })
         );
       } else {
         window.dispatchEvent(
-          new CustomEvent('pcd-pulse', {
+          new CustomEvent("pcd-pulse", {
             detail: {
               baseId,
               point: targetPoint,

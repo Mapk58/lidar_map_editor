@@ -1,9 +1,9 @@
-import { TransformControls } from '@react-three/drei';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import * as THREE from 'three';
+import { TransformControls } from "@react-three/drei";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import * as THREE from "three";
 
-type Mode = 'scale' | 'rotate' | 'translate';
-const MODES: Mode[] = ['scale', 'rotate', 'translate'];
+type Mode = "scale" | "rotate" | "translate";
+const MODES: Mode[] = ["scale", "rotate", "translate"];
 
 function nextMode(current: Mode) {
   const idx = MODES.indexOf(current);
@@ -57,17 +57,17 @@ export const TransformController: React.FC<Props> = ({
   onModeChange,
   hideInTranslateMode = false,
 }) => {
-  const [currentMode, setCurrentMode] = useState<Mode>('scale');
+  const [currentMode, setCurrentMode] = useState<Mode>("scale");
 
   // Реагируем на Shift для смены режима
   useEffect(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key !== 'Shift') return;
+      if (e.key !== "Shift") return;
       setCurrentMode(prev => nextMode(prev));
     };
-    window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener("keyup", handleKeyUp);
     return () => {
-      window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 
@@ -77,7 +77,7 @@ export const TransformController: React.FC<Props> = ({
   }, [currentMode, onModeChange]);
 
   const shouldShow = useMemo(
-    () => !!visible && !(hideInTranslateMode && currentMode === 'translate'),
+    () => !!visible && !(hideInTranslateMode && currentMode === "translate"),
     [visible, currentMode, hideInTranslateMode]
   );
 
@@ -86,9 +86,9 @@ export const TransformController: React.FC<Props> = ({
     const bboxData = getBoundingBoxData(objectRef.current);
     if (!bboxData) return;
     let eventType: string | null = null;
-    if (currentMode === 'scale') eventType = 'bbox-size-changed';
-    else if (currentMode === 'rotate') eventType = 'bbox-rotation-changed';
-    else if (currentMode === 'translate') eventType = 'bbox-center-changed';
+    if (currentMode === "scale") eventType = "bbox-size-changed";
+    else if (currentMode === "rotate") eventType = "bbox-rotation-changed";
+    else if (currentMode === "translate") eventType = "bbox-center-changed";
     if (eventType)
       window.dispatchEvent(new CustomEvent(eventType, { detail: bboxData }));
   }, [objectRef, currentMode]);
@@ -101,8 +101,8 @@ export const TransformController: React.FC<Props> = ({
           object={objectRef?.current || undefined}
           size={size}
           onMouseUp={onTcMouseUp}
-          showX={currentMode !== 'rotate'}
-          showZ={currentMode !== 'rotate'}
+          showX={currentMode !== "rotate"}
+          showZ={currentMode !== "rotate"}
         />
       ) : null}
     </>

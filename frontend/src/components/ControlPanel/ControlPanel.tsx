@@ -1,27 +1,27 @@
-import { CameraControls } from '@react-three/drei';
-import React, { useMemo, useState } from 'react';
-import * as THREE from 'three';
+import { CameraControls } from "@react-three/drei";
+import React, { useMemo, useState } from "react";
+import * as THREE from "three";
 
-import type { BboxData, ChunkData } from '../../types/chunks';
-import type { PointCloudManager } from '../../types/pointCloud';
-import type { TabType } from './tabs/types';
+import type { BboxData, ChunkData } from "../../types/chunks";
+import type { PointCloudManager } from "../../types/pointCloud";
+import type { TabType } from "./tabs/types";
 
-import styles from './ControlPanel.module.css';
-import { ChunksTab } from './tabs/ChunksTab';
-import { DynamicsTab } from './tabs/DynamicsTab';
-import { PerformanceTab } from './tabs/PerformanceTab';
-import { SettingsTab } from './tabs/SettingsTab';
-import { UploadTab } from './tabs/UploadTab';
+import styles from "./ControlPanel.module.css";
+import { ChunksTab } from "./tabs/ChunksTab";
+import { DynamicsTab } from "./tabs/DynamicsTab";
+import { PerformanceTab } from "./tabs/PerformanceTab";
+import { SettingsTab } from "./tabs/SettingsTab";
+import { UploadTab } from "./tabs/UploadTab";
 
 const TABS: ReadonlyArray<{ id: TabType; label: string }> = [
-  { id: 'upload', label: 'Файлы' },
-  { id: 'performance', label: 'Производительность' },
-  { id: 'chunks', label: 'Чанки' },
-  { id: 'dynamics', label: 'Дин.объекты' },
-  { id: 'settings', label: 'Настройки' },
+  { id: "upload", label: "Файлы" },
+  { id: "performance", label: "Производительность" },
+  { id: "chunks", label: "Чанки" },
+  { id: "dynamics", label: "Дин.объекты" },
+  { id: "settings", label: "Настройки" },
 ];
 
-const DEFAULT_TAB: TabType = 'upload';
+const DEFAULT_TAB: TabType = "upload";
 
 export type ControlPanelProps = {
   onProcessChunks: (chunks: ChunkData[]) => Promise<void>;
@@ -69,7 +69,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
   const content = useMemo(() => {
     switch (activeTab) {
-      case 'upload':
+      case "upload":
         return (
           <UploadTab
             onProcessChunks={onProcessChunks}
@@ -80,11 +80,11 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             setLastJobId={setLastJobId}
           />
         );
-      case 'performance':
+      case "performance":
         return (
           <PerformanceTab density={density} onDensityChange={onDensityChange} />
         );
-      case 'chunks':
+      case "chunks":
         return (
           <ChunksTab
             pointCloudManager={pointCloudManager}
@@ -93,7 +93,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             confidenceThreshold={confidenceThreshold}
           />
         );
-      case 'settings':
+      case "settings":
         return (
           <SettingsTab
             confidenceThreshold={confidenceThreshold}
@@ -104,7 +104,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             onPointSizeChange={onPointSizeChange}
           />
         );
-      case 'dynamics':
+      case "dynamics":
         return (
           <DynamicsTab
             pointCloudManager={pointCloudManager}
@@ -151,7 +151,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`${styles.tab} ${
-                  activeTab === tab.id ? styles.tabActive : ''
+                  activeTab === tab.id ? styles.tabActive : ""
                 }`}
               >
                 {tab.label}

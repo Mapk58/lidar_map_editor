@@ -1,4 +1,4 @@
-import type { Point3D } from './pointCloud';
+import type { Point3D } from "./pointCloud";
 
 export type BboxData = {
   bounding_box: {

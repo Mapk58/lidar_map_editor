@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './Slider.module.css';
+import styles from "./Slider.module.css";
 
 type SliderProps = {
   value: number;
@@ -26,7 +26,7 @@ export const Slider: React.FC<SliderProps> = ({
   step = 1,
   label,
   disabled = false,
-  unit = '',
+  unit = "",
   showValue = true,
   className,
   style,
@@ -43,7 +43,7 @@ export const Slider: React.FC<SliderProps> = ({
   };
 
   const formatValue = (val: number) => {
-    if (unit === '%') {
+    if (unit === "%") {
       return `${val}%`;
     }
     if (unit) {
@@ -53,7 +53,7 @@ export const Slider: React.FC<SliderProps> = ({
   };
 
   return (
-    <div className={`${styles.slider} ${className || ''}`} style={style}>
+    <div className={`${styles.slider} ${className || ""}`} style={style}>
       {label && <label className={styles.label}>{label}</label>}
       <div className={styles.container}>
         <input
@@ -66,11 +66,11 @@ export const Slider: React.FC<SliderProps> = ({
           onMouseUp={handleCommit}
           onTouchEnd={handleCommit}
           disabled={disabled}
-          className={`${styles.input} ${disabled ? styles.inputDisabled : ''}`}
+          className={`${styles.input} ${disabled ? styles.inputDisabled : ""}`}
         />
         {showValue && (
           <span
-            className={`${styles.value} ${disabled ? styles.valueDisabled : ''}`}
+            className={`${styles.value} ${disabled ? styles.valueDisabled : ""}`}
           >
             {formatValue(value)}
           </span>

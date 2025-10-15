@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+*.min.js
+*.min.css
+yarn.lock
+*.log
+.env
+.env.*
+!.env.example

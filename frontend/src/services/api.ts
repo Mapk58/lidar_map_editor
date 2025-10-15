@@ -1,12 +1,12 @@
-import axios, { type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse } from "axios";
 
 import type {
   ApiJobResponse,
   ExportPcdRequest,
   ExportPcdResponse,
-} from '../types/chunks';
+} from "../types/chunks";
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = "http://localhost:8000";
 
 export type ApiResponse<T> = {
   success: boolean;
@@ -17,7 +17,7 @@ export type ApiResponse<T> = {
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -34,7 +34,7 @@ export class ApiService {
       }))
       .catch(error => ({
         success: false,
-        error: error instanceof Error ? error.message : 'Неизвестная ошибка',
+        error: error instanceof Error ? error.message : "Неизвестная ошибка",
       }));
   }
 
@@ -43,11 +43,11 @@ export class ApiService {
    */
   static processPcd(file: File): Promise<ApiResponse<ApiJobResponse>> {
     const form = new FormData();
-    form.append('file', file);
+    form.append("file", file);
 
     return apiClient
-      .post('/process_pcd', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      .post("/process_pcd", form, {
+        headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response: AxiosResponse<ApiJobResponse>) => ({
         success: true,
@@ -55,7 +55,7 @@ export class ApiService {
       }))
       .catch(error => ({
         success: false,
-        error: error instanceof Error ? error.message : 'Неизвестная ошибка',
+        error: error instanceof Error ? error.message : "Неизвестная ошибка",
       }));
   }
 
@@ -65,22 +65,22 @@ export class ApiService {
   static exportPcd(
     request: ExportPcdRequest
   ): Promise<ApiResponse<ExportPcdResponse>> {
-    console.log('ApiService.exportPcd: Sending POST request to /results');
-    console.log('ApiService.exportPcd: Request data:', request);
+    console.log("ApiService.exportPcd: Sending POST request to /results");
+    console.log("ApiService.exportPcd: Request data:", request);
     return apiClient
-      .post('/results', request)
+      .post("/results", request)
       .then((response: AxiosResponse<ExportPcdResponse>) => {
-        console.log('ApiService.exportPcd: Response received:', response.data);
+        console.log("ApiService.exportPcd: Response received:", response.data);
         return {
           success: true,
           data: response.data,
         };
       })
       .catch(error => {
-        console.error('ApiService.exportPcd: Error occurred:', error);
+        console.error("ApiService.exportPcd: Error occurred:", error);
         return {
           success: false,
-          error: error instanceof Error ? error.message : 'Неизвестная ошибка',
+          error: error instanceof Error ? error.message : "Неизвестная ошибка",
         };
       });
   }
@@ -89,21 +89,21 @@ export class ApiService {
    * Скачать PCD файл по URL
    */
   static downloadPcd(url: string): Promise<Blob> {
-    console.log('ApiService.downloadPcd: Downloading file from:', url);
+    console.log("ApiService.downloadPcd: Downloading file from:", url);
     return apiClient
       .get(url, {
-        responseType: 'blob',
+        responseType: "blob",
       })
       .then(response => {
         console.log(
-          'ApiService.downloadPcd: File downloaded successfully, size:',
+          "ApiService.downloadPcd: File downloaded successfully, size:",
           response.data.size,
-          'bytes'
+          "bytes"
         );
         return response.data;
       })
       .catch(error => {
-        console.error('ApiService.downloadPcd: Download error:', error);
+        console.error("ApiService.downloadPcd: Download error:", error);
         throw error;
       });
   }

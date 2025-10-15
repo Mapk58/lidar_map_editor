@@ -1,6 +1,6 @@
 export type TabType =
-  | 'upload'
-  | 'performance'
-  | 'chunks'
-  | 'dynamics'
-  | 'settings';
+  | "upload"
+  | "performance"
+  | "chunks"
+  | "dynamics"
+  | "settings";

@@ -1,4 +1,4 @@
-import type { ChunkData, ProcessedChunkData } from '../types/chunks';
+import type { ChunkData, ProcessedChunkData } from "../types/chunks";
 
 export class ChunkProcessor {
   /**

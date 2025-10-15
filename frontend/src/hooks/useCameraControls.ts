@@ -1,6 +1,6 @@
-import { CameraControls } from '@react-three/drei';
-import { useCallback } from 'react';
-import * as THREE from 'three';
+import { CameraControls } from "@react-three/drei";
+import { useCallback } from "react";
+import * as THREE from "three";
 
 type UseCameraControlsProps = {
   cameraControlsRef: React.RefObject<CameraControls | null>;

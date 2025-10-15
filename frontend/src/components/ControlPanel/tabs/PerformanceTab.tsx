@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Slider } from '../../Slider';
-import styles from '../ControlPanel.module.css';
+import { Slider } from "../../Slider";
+import styles from "../ControlPanel.module.css";
 
 type PerformanceTabProps = {
   density: number;

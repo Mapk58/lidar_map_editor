@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from '../ControlPanel.module.css';
+import styles from "../ControlPanel.module.css";
 
 export const HelpTab: React.FC = () => {
   return (

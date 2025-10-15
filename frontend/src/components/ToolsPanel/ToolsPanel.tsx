@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
-import * as THREE from 'three';
+import React, { useCallback } from "react";
+import * as THREE from "three";
 
-import styles from './ToolsPanel.module.css';
+import styles from "./ToolsPanel.module.css";
 
 type ToolsPanelProps = {
   transformControllerRef?: React.RefObject<THREE.Group | null>;
@@ -35,7 +35,7 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
     }
 
     window.dispatchEvent(
-      new CustomEvent('pcd-create-bbox-at', {
+      new CustomEvent("pcd-create-bbox-at", {
         detail: { position: center.clone() },
       })
     );

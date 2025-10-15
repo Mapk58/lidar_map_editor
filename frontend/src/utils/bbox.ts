@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 export type LocalOrientedBox = {
   center: [number, number, number];
@@ -19,11 +19,11 @@ type InternalApiBounding = {
   yaw: number;
 };
 
-const EDGES_CONTAINER_NAME = 'bbox-edges';
+const EDGES_CONTAINER_NAME = "bbox-edges";
 
 const getEdgesContainer = (group: THREE.Group): THREE.Group => {
   let container = group.children.find(
-    c => c.type === 'Group' && (c as THREE.Group).name === EDGES_CONTAINER_NAME
+    c => c.type === "Group" && (c as THREE.Group).name === EDGES_CONTAINER_NAME
   ) as THREE.Group | undefined;
   if (!container) {
     container = new THREE.Group();
@@ -181,7 +181,7 @@ export const addResizeHandles = (): BboxResizeHandle[] => {
   return [];
 };
 
-export type BboxAxis = 'x' | 'y' | 'z';
+export type BboxAxis = "x" | "y" | "z";
 
 const getApiBounding = (group: THREE.Group): InternalApiBounding | null => {
   const data = (group.userData as Record<string, unknown>).apiBounding as
@@ -276,23 +276,23 @@ export const applyOneSidedResize = (
   const worldQuat = new THREE.Quaternion();
   group.getWorldQuaternion(worldQuat);
   const axisLocal =
-    axis === 'x'
+    axis === "x"
       ? new THREE.Vector3(1, 0, 0)
-      : axis === 'y'
+      : axis === "y"
         ? new THREE.Vector3(0, 1, 0)
         : new THREE.Vector3(0, 0, 1);
   const axisWorld = axisLocal.clone().applyQuaternion(worldQuat).normalize();
 
   const currentAxisSize =
-    axis === 'x' ? size.x : axis === 'y' ? size.y : size.z;
+    axis === "x" ? size.x : axis === "y" ? size.y : size.z;
   const newAxisSize = Math.max(minSize, currentAxisSize + delta);
 
   const halfShift = axisWorld.clone().multiplyScalar(delta / 2);
   group.position.add(halfShift);
 
-  if (axis === 'x') size.x = newAxisSize;
-  if (axis === 'y') size.y = newAxisSize;
-  if (axis === 'z') size.z = newAxisSize;
+  if (axis === "x") size.x = newAxisSize;
+  if (axis === "y") size.y = newAxisSize;
+  if (axis === "z") size.z = newAxisSize;
 
   rebuildEdges(group, size);
 };

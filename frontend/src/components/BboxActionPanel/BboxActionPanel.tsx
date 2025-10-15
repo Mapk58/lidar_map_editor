@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './BboxActionPanel.module.css';
+import styles from "./BboxActionPanel.module.css";
 
 type BboxActionPanelProps = {
   isVisible: boolean;

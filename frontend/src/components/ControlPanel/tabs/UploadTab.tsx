@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from "react";
 
-import type { ChunkData, BboxData } from '../../../types/chunks';
+import type { ChunkData, BboxData } from "../../../types/chunks";
 
-import { ApiService } from '../../../services/api';
-import styles from '../ControlPanel.module.css';
+import { ApiService } from "../../../services/api";
+import styles from "../ControlPanel.module.css";
 
-const DEFAULT_TEXT_VALUE = '04852fcf-2fbf-477a-ab78-5a6970614c96';
+const DEFAULT_TEXT_VALUE = "04852fcf-2fbf-477a-ab78-5a6970614c96";
 
 type UploadTabProps = {
   onProcessChunks: (chunks: ChunkData[]) => Promise<void>;
@@ -48,7 +48,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
   const handleUpload = useCallback(async () => {
     const trimmed = textInput.trim();
     if (!trimmed) {
-      setLocalError('Введите корректный job_id');
+      setLocalError("Введите корректный job_id");
       return;
     }
 
@@ -59,18 +59,18 @@ export const UploadTab: React.FC<UploadTabProps> = ({
     ApiService.getJobResults(trimmed)
       .then(response => {
         if (!response.success || !response.data) {
-          throw new Error(response.error || 'Ошибка получения данных');
+          throw new Error(response.error || "Ошибка получения данных");
         }
         return onProcessChunks(response.data.results);
       })
       .then(() => {
-        setTextInput('');
+        setTextInput("");
       })
       .catch(uploadError => {
         const message =
           uploadError instanceof Error
             ? uploadError.message
-            : 'Не удалось загрузить данные';
+            : "Не удалось загрузить данные";
         setLocalError(message);
       })
       .finally(() => {
@@ -93,7 +93,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
 
   const handleFileUpload = useCallback(() => {
     if (!selectedFile) {
-      setLocalError('Выберите файл .pcd');
+      setLocalError("Выберите файл .pcd");
       return;
     }
     setIsFileSubmitting(true);
@@ -101,7 +101,7 @@ export const UploadTab: React.FC<UploadTabProps> = ({
     ApiService.processPcd(selectedFile)
       .then(response => {
         if (!response.success || !response.data) {
-          throw new Error(response.error || 'Ошибка обработки файла');
+          throw new Error(response.error || "Ошибка обработки файла");
         }
         setLastJobId(response.data.job_id);
         return onProcessChunks(response.data.results);
@@ -110,23 +110,23 @@ export const UploadTab: React.FC<UploadTabProps> = ({
         setSelectedFile(null);
       })
       .catch(err => {
-        const message = err instanceof Error ? err.message : 'Ошибка загрузки';
+        const message = err instanceof Error ? err.message : "Ошибка загрузки";
         setLocalError(message);
       })
       .finally(() => setIsFileSubmitting(false));
   }, [onProcessChunks, selectedFile, setLastJobId]);
 
   const handleExportPcd = useCallback(async () => {
-    console.log('=== Экспорт PCD ===');
-    console.log('Текущий job_id:', lastJobId || 'Недоступен');
+    console.log("=== Экспорт PCD ===");
+    console.log("Текущий job_id:", lastJobId || "Недоступен");
 
     if (!lastJobId) {
-      setLocalError('Нет доступного job_id для экспорта');
+      setLocalError("Нет доступного job_id для экспорта");
       return;
     }
 
     if (!bboxManager?.deletedBboxes || bboxManager.deletedBboxes.length === 0) {
-      setLocalError('Не найдено удаленных bbox');
+      setLocalError("Не найдено удаленных bbox");
       return;
     }
 
@@ -136,20 +136,20 @@ export const UploadTab: React.FC<UploadTabProps> = ({
         bounding_box: bboxManager.deletedBboxes.map(bbox => bbox.bounding_box),
       };
 
-      console.log('Отправка запроса экспорта:', request);
-      console.log('Вызов ApiService.exportPcd...');
+      console.log("Отправка запроса экспорта:", request);
+      console.log("Вызов ApiService.exportPcd...");
       const response = await ApiService.exportPcd(request);
-      console.log('Получен ответ экспорта:', response);
+      console.log("Получен ответ экспорта:", response);
 
       if (response.success && response.data?.download_url) {
-        console.log('Экспорт успешен, загрузка файла...');
+        console.log("Экспорт успешен, загрузка файла...");
 
-        console.log('Загрузка файла по URL:', response.data.download_url);
+        console.log("Загрузка файла по URL:", response.data.download_url);
         const blob = await ApiService.downloadPcd(response.data.download_url);
-        console.log('Получен blob файла, размер:', blob.size, 'байт');
+        console.log("Получен blob файла, размер:", blob.size, "байт");
 
         const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
         link.download = `exported_${lastJobId}.pcd`;
         document.body.appendChild(link);
@@ -157,15 +157,15 @@ export const UploadTab: React.FC<UploadTabProps> = ({
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
 
-        console.log('Файл успешно загружен');
+        console.log("Файл успешно загружен");
       } else {
-        console.error('Ошибка экспорта:', response.error);
-        setLocalError(response.error || 'Ошибка экспорта');
+        console.error("Ошибка экспорта:", response.error);
+        setLocalError(response.error || "Ошибка экспорта");
       }
     } catch (error) {
-      console.error('Ошибка экспорта:', error);
+      console.error("Ошибка экспорта:", error);
       const message =
-        error instanceof Error ? error.message : 'Ошибка экспорта';
+        error instanceof Error ? error.message : "Ошибка экспорта";
       setLocalError(message);
     }
   }, [bboxManager?.deletedBboxes, lastJobId]);
@@ -188,12 +188,12 @@ export const UploadTab: React.FC<UploadTabProps> = ({
             className={`${styles.uploadButton} ${
               isAnySubmitting || !selectedFile
                 ? styles.uploadButtonDisabled
-                : ''
+                : ""
             }`}
-            title={isAnySubmitting ? 'Загрузка...' : 'Загрузить файл'}
+            title={isAnySubmitting ? "Загрузка..." : "Загрузить файл"}
             type="button"
           >
-            {isAnySubmitting ? '⏳' : '⬆️'}
+            {isAnySubmitting ? "⏳" : "⬆️"}
           </button>
         </div>
       </div>
@@ -215,12 +215,12 @@ export const UploadTab: React.FC<UploadTabProps> = ({
             onClick={handleUpload}
             disabled={isAnySubmitting || isTextEmpty}
             className={`${styles.uploadButton} ${
-              isAnySubmitting || isTextEmpty ? styles.uploadButtonDisabled : ''
+              isAnySubmitting || isTextEmpty ? styles.uploadButtonDisabled : ""
             }`}
-            title={isAnySubmitting ? 'Загрузка...' : 'Загрузить'}
+            title={isAnySubmitting ? "Загрузка..." : "Загрузить"}
             type="button"
           >
-            {isAnySubmitting ? '⏳' : '⬆️'}
+            {isAnySubmitting ? "⏳" : "⬆️"}
           </button>
         </div>
 

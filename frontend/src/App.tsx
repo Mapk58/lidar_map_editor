@@ -1,17 +1,17 @@
-import { CameraControls } from '@react-three/drei';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
+import { CameraControls } from "@react-three/drei";
+import { useCallback, useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 
-import type { ChunkData } from './types/chunks';
+import type { ChunkData } from "./types/chunks";
 
-import styles from './App.module.css';
-import { BboxActionPanel } from './components/BboxActionPanel/BboxActionPanel';
-import { ControlPanel } from './components/ControlPanel';
-import { PointCloudViewer } from './components/PointCloudViewer';
-import { ToolsPanel } from './components/ToolsPanel';
-import { useBboxManager } from './hooks/useBboxManager';
-import { useChunkProcessor } from './hooks/useChunkProcessor';
-import { usePointCloudManager } from './hooks/usePointCloudManager';
+import styles from "./App.module.css";
+import { BboxActionPanel } from "./components/BboxActionPanel/BboxActionPanel";
+import { ControlPanel } from "./components/ControlPanel";
+import { PointCloudViewer } from "./components/PointCloudViewer";
+import { ToolsPanel } from "./components/ToolsPanel";
+import { useBboxManager } from "./hooks/useBboxManager";
+import { useChunkProcessor } from "./hooks/useChunkProcessor";
+import { usePointCloudManager } from "./hooks/usePointCloudManager";
 
 export const App = () => {
   const pointCloudManager = usePointCloudManager();
@@ -153,12 +153,12 @@ export const App = () => {
     };
 
     window.addEventListener(
-      'bbox-size-changed',
+      "bbox-size-changed",
       onBboxSizeChanged as EventListener
     );
     return () => {
       window.removeEventListener(
-        'bbox-size-changed',
+        "bbox-size-changed",
         onBboxSizeChanged as EventListener
       );
     };
@@ -177,12 +177,12 @@ export const App = () => {
     };
 
     window.addEventListener(
-      'bbox-rotation-changed',
+      "bbox-rotation-changed",
       onBboxRotationChanged as EventListener
     );
     return () => {
       window.removeEventListener(
-        'bbox-rotation-changed',
+        "bbox-rotation-changed",
         onBboxRotationChanged as EventListener
       );
     };
@@ -201,12 +201,12 @@ export const App = () => {
     };
 
     window.addEventListener(
-      'bbox-center-changed',
+      "bbox-center-changed",
       onBboxCenterChanged as EventListener
     );
     return () => {
       window.removeEventListener(
-        'bbox-center-changed',
+        "bbox-center-changed",
         onBboxCenterChanged as EventListener
       );
     };

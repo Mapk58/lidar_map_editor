@@ -1,16 +1,16 @@
-import { CameraControls } from '@react-three/drei';
+import { CameraControls } from "@react-three/drei";
 import React, {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from 'react';
-import * as THREE from 'three';
+} from "react";
+import * as THREE from "three";
 
-import type { PointChunk, PointCloudManager } from '../../../types/pointCloud';
+import type { PointChunk, PointCloudManager } from "../../../types/pointCloud";
 
-import styles from '../ControlPanel.module.css';
+import styles from "../ControlPanel.module.css";
 
 type DynamicsTabProps = {
   pointCloudManager: PointCloudManager;
@@ -35,7 +35,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
   const pendingScrollIdRef = useRef<string | null>(null);
 
   const dynamicChunks = useMemo<PointChunk[]>(
-    () => pointCloudManager.chunks.filter(c => c.id.includes('_dynamic_')),
+    () => pointCloudManager.chunks.filter(c => c.id.includes("_dynamic_")),
     [pointCloudManager.chunks]
   );
 
@@ -55,7 +55,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
       if (!chunk || !chunk.mesh) return;
 
       window.dispatchEvent(
-        new CustomEvent('pcd-pulse-chunk', {
+        new CustomEvent("pcd-pulse-chunk", {
           detail: { id: chunkId, color: 0xffffff },
         })
       );
@@ -93,14 +93,14 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
     const onPulseChunk = (evt: Event) => {
       const e = evt as CustomEvent<{ id: string }>;
       const id = e?.detail?.id;
-      if (!id || !id.includes('_dynamic_')) return;
+      if (!id || !id.includes("_dynamic_")) return;
       setSelectedDynamicId(id);
       pendingScrollIdRef.current = id;
     };
-    window.addEventListener('pcd-pulse-chunk', onPulseChunk as EventListener);
+    window.addEventListener("pcd-pulse-chunk", onPulseChunk as EventListener);
     return () =>
       window.removeEventListener(
-        'pcd-pulse-chunk',
+        "pcd-pulse-chunk",
         onPulseChunk as EventListener
       );
   }, []);
@@ -120,7 +120,7 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
         `[data-chunk-id="${id}"]`
       ) as HTMLElement | null;
       if (item && item.scrollIntoView) {
-        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        item.scrollIntoView({ behavior: "smooth", block: "center" });
         pendingScrollIdRef.current = null;
         if (observer) observer.disconnect();
       }
@@ -157,24 +157,24 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
           const confidence = chunk.confidence;
           let confidenceColor: string | undefined;
           if (
-            typeof confidence === 'number' &&
-            typeof confidenceThreshold === 'number'
+            typeof confidence === "number" &&
+            typeof confidenceThreshold === "number"
           ) {
             confidenceColor =
-              confidence > confidenceThreshold ? '#ff4d4f' : '#ffff00';
+              confidence > confidenceThreshold ? "#ff4d4f" : "#ffff00";
           }
           return (
             <div
               key={chunk.id}
               className={`${styles.chunkItem} ${
-                selectedDynamicId === chunk.id ? styles.selectedDynamicItem : ''
+                selectedDynamicId === chunk.id ? styles.selectedDynamicItem : ""
               }`}
               data-chunk-id={chunk.id}
               onClick={() => {
                 setSelectedDynamicId(chunk.id);
                 focusOnChunk(chunk.id);
               }}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <div className={styles.chunkInfo}>
                 <span
@@ -198,10 +198,10 @@ export const DynamicsTab: React.FC<DynamicsTabProps> = ({
                     e.stopPropagation();
                     setChunkVisibility(chunk.id, !isVisible);
                   }}
-                  title={isVisible ? 'Скрыть' : 'Показать'}
+                  title={isVisible ? "Скрыть" : "Показать"}
                   type="button"
                 >
-                  {isVisible ? '👁️' : '🙈'}
+                  {isVisible ? "👁️" : "🙈"}
                 </button>
               </div>
             </div>

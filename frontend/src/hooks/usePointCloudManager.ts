@@ -1,11 +1,11 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import * as THREE from 'three';
+import { useCallback, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
 import type {
   Point3D,
   PointChunk,
   PointCloudManager,
-} from '../types/pointCloud';
+} from "../types/pointCloud";
 
 const CHUNK_ID_SUFFIX_REGEX = /(_ground|_static|_dynamic_\d+)$/;
 
@@ -17,7 +17,7 @@ const ensurePointChunk = (chunkId: string, map: Map<string, PointChunk>) => {
   return chunk;
 };
 
-const normalizeBaseId = (id: string) => id.replace(CHUNK_ID_SUFFIX_REGEX, '');
+const normalizeBaseId = (id: string) => id.replace(CHUNK_ID_SUFFIX_REGEX, "");
 
 const createChunk = (
   id: string,
@@ -41,7 +41,7 @@ const createChunk = (
 
 const disposeChunkResources = (chunk: PointChunk) => {
   chunk.geometry?.dispose();
-  if (chunk.material && 'dispose' in chunk.material) {
+  if (chunk.material && "dispose" in chunk.material) {
     (chunk.material as THREE.Material).dispose();
   }
 };

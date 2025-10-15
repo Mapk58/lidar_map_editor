@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import * as THREE from 'three';
+import React, { useCallback, useState } from "react";
+import * as THREE from "three";
 
-import type { BboxData } from '../types/chunks';
-import type { PointCloudManager } from '../types/pointCloud';
+import type { BboxData } from "../types/chunks";
+import type { PointCloudManager } from "../types/pointCloud";
 
-import { getBboxSize } from '../utils/bbox';
+import { getBboxSize } from "../utils/bbox";
 
 type BoundingBox = {
   center: THREE.Vector3;
@@ -60,7 +60,7 @@ export const useBboxManager = (
       pointCloudManager.chunks.forEach(chunk => {
         if (chunk.mesh && chunk.mesh.geometry) {
           const geometry = chunk.mesh.geometry;
-          const positionAttribute = geometry.getAttribute('position');
+          const positionAttribute = geometry.getAttribute("position");
 
           if (positionAttribute) {
             const positions = positionAttribute.array as Float32Array;
@@ -91,7 +91,7 @@ export const useBboxManager = (
             if (newCount > 0) {
               const newPositions = new Float32Array(filteredPositions);
               geometry.setAttribute(
-                'position',
+                "position",
                 new THREE.BufferAttribute(newPositions, 3)
               );
               geometry.computeBoundingSphere();
@@ -196,7 +196,7 @@ export const useBboxManager = (
       setCurrentBbox(null);
       setIsBboxResized(false);
 
-      window.dispatchEvent(new CustomEvent('bbox-delete'));
+      window.dispatchEvent(new CustomEvent("bbox-delete"));
     }
   }, [
     currentBbox,
@@ -216,7 +216,7 @@ export const useBboxManager = (
   const clearAllBboxes = useCallback(() => {
     setCurrentBbox(null);
     setIsBboxResized(false);
-    window.dispatchEvent(new CustomEvent('bbox-delete'));
+    window.dispatchEvent(new CustomEvent("bbox-delete"));
   }, []);
 
   const clearDeletedBboxes = useCallback(() => {

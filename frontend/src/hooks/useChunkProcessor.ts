@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-import type { ChunkData, ProcessedChunkData } from '../types/chunks';
+import type { ChunkData, ProcessedChunkData } from "../types/chunks";
 
-import { ChunkProcessor } from '../utils/chunkProcessor';
+import { ChunkProcessor } from "../utils/chunkProcessor";
 
 type UseChunkProcessorReturn = {
   processedChunks: ProcessedChunkData[];
@@ -36,7 +36,7 @@ export const useChunkProcessor = (): UseChunkProcessorReturn => {
       })
       .catch(err => {
         const errorMessage =
-          err instanceof Error ? err.message : 'Неизвестная ошибка';
+          err instanceof Error ? err.message : "Неизвестная ошибка";
         setError(errorMessage);
         setIsLoading(false);
       });

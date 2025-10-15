@@ -1,5 +1,5 @@
-import { CameraControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { CameraControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import React, {
   Suspense,
   useCallback,
@@ -7,16 +7,16 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import * as THREE from 'three';
+} from "react";
+import * as THREE from "three";
 
-import type { PointCloudManager } from '../types/pointCloud';
+import type { PointCloudManager } from "../types/pointCloud";
 
-import { useWebGLContext } from '../hooks/useWebGLContext';
-import { createBboxGroup, disposeThreeObject } from '../utils/bbox';
-import { PcdLoader } from './PcdLoader';
-import styles from './PointCloudViewer.module.css';
-import { TransformController } from './TransformController';
+import { useWebGLContext } from "../hooks/useWebGLContext";
+import { createBboxGroup, disposeThreeObject } from "../utils/bbox";
+import { PcdLoader } from "./PcdLoader";
+import styles from "./PointCloudViewer.module.css";
+import { TransformController } from "./TransformController";
 
 type PointCloudViewerProps = {
   pointCloudManager: PointCloudManager;
@@ -41,7 +41,7 @@ type PointCloudViewerProps = {
 export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
   pointCloudManager,
   pointSize = 0.1,
-  backgroundColor = '#000000',
+  backgroundColor = "#000000",
   transformControlsVisible,
   transformControllerRef,
   cameraControlsRef: externalCameraControlsRef,
@@ -223,7 +223,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
       if (!pos) return;
 
       const bbox = createBboxGroup({
-        chunkId: 'manual',
+        chunkId: "manual",
         apiBounding: {
           center: [pos.x, pos.y, pos.z],
           size: [3, 3, 3],
@@ -235,15 +235,15 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
 
       createAndFocusBbox(bbox, pos);
 
-      window.dispatchEvent(new CustomEvent('pcd-edit-bbox-start'));
+      window.dispatchEvent(new CustomEvent("pcd-edit-bbox-start"));
     };
     window.addEventListener(
-      'pcd-create-bbox-at',
+      "pcd-create-bbox-at",
       onCreateBboxAt as EventListener
     );
     return () =>
       window.removeEventListener(
-        'pcd-create-bbox-at',
+        "pcd-create-bbox-at",
         onCreateBboxAt as EventListener
       );
   }, [createAndFocusBbox]);
@@ -272,17 +272,17 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
 
         createAndFocusBbox(bboxCopy, worldPos);
 
-        window.removeEventListener('pcd-bbox-ref', onBboxRef as EventListener);
+        window.removeEventListener("pcd-bbox-ref", onBboxRef as EventListener);
       };
-      window.addEventListener('pcd-bbox-ref', onBboxRef as EventListener);
+      window.addEventListener("pcd-bbox-ref", onBboxRef as EventListener);
       window.dispatchEvent(
-        new CustomEvent('pcd-bind-bbox', { detail: { id } })
+        new CustomEvent("pcd-bind-bbox", { detail: { id } })
       );
     };
-    window.addEventListener('pcd-pulse-chunk', onDynamicFocus as EventListener);
+    window.addEventListener("pcd-pulse-chunk", onDynamicFocus as EventListener);
     return () =>
       window.removeEventListener(
-        'pcd-pulse-chunk',
+        "pcd-pulse-chunk",
         onDynamicFocus as EventListener
       );
   }, [createAndFocusBbox]);
@@ -300,8 +300,8 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
       clearAllBboxes();
     };
 
-    window.addEventListener('bbox-delete', onBboxDelete);
-    return () => window.removeEventListener('bbox-delete', onBboxDelete);
+    window.addEventListener("bbox-delete", onBboxDelete);
+    return () => window.removeEventListener("bbox-delete", onBboxDelete);
   }, [clearAllBboxes]);
 
   useEffect(() => {
@@ -316,12 +316,12 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
     };
 
     window.addEventListener(
-      'pcd-pulse',
+      "pcd-pulse",
       onNonDynamicDoubleClick as EventListener
     );
     return () => {
       window.removeEventListener(
-        'pcd-pulse',
+        "pcd-pulse",
         onNonDynamicDoubleClick as EventListener
       );
     };
@@ -329,7 +329,7 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
 
   return (
     <div
-      style={{ width: '100%', height: '100vh', background: backgroundColor }}
+      style={{ width: "100%", height: "100vh", background: backgroundColor }}
     >
       <Canvas
         camera={{ position: [0, 0, 10], fov: 60, near: 0.1, far: 10000 }}
@@ -339,19 +339,19 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
         <directionalLight position={[10, 10, 5]} intensity={1} />
 
         {chunksToRender.map(chunk => {
-          let color = '#ffffff';
-          if (chunk.id.includes('ground')) {
-            color = '#8B4513';
-          } else if (chunk.id.includes('static')) {
-            color = '#00ff00';
-          } else if (chunk.id.includes('dynamic')) {
+          let color = "#ffffff";
+          if (chunk.id.includes("ground")) {
+            color = "#8B4513";
+          } else if (chunk.id.includes("static")) {
+            color = "#00ff00";
+          } else if (chunk.id.includes("dynamic")) {
             const conf =
-              typeof chunk.confidence === 'number' ? chunk.confidence : 0;
+              typeof chunk.confidence === "number" ? chunk.confidence : 0;
             const thr = Math.max(0, Math.min(1, confidenceThreshold));
-            color = conf > thr ? '#ff0000' : '#ffff00';
+            color = conf > thr ? "#ff0000" : "#ffff00";
           }
 
-          const fileUrl = chunk.fileUrl || '';
+          const fileUrl = chunk.fileUrl || "";
 
           return (
             <Suspense key={chunk.id} fallback={null}>
