@@ -131,10 +131,20 @@ export const UploadTab: React.FC<UploadTabProps> = ({
     }
 
     try {
+      const convertBboxToPcdFormat = (bbox: any) => {
+        const [sx, sy, sz] = bbox.size;
+
+        return {
+          ...bbox,
+          center: bbox.center,
+          size: [sx, sz, sy], // Y = sz, Z = sy
+        };
+      };
+
       const request = {
         job_id: lastJobId,
-        bounding_box: bboxManager.deletedBboxes.map(
-          (bbox) => bbox.bounding_box,
+        bounding_box: bboxManager.deletedBboxes.map((bbox) =>
+          convertBboxToPcdFormat(bbox.bounding_box),
         ),
       };
 

@@ -233,6 +233,8 @@ export const PointCloudViewer: React.FC<PointCloudViewerProps> = ({
         materialColor: 0x00ffff,
       });
 
+      bbox.rotation.x = -Math.PI / 2;
+
       createAndFocusBbox(bbox, pos);
 
       window.dispatchEvent(new CustomEvent("pcd-edit-bbox-start"));

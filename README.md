@@ -24,6 +24,11 @@ docker build -t lidar-map-editor .
 
 ## Запуск
 
+### CPU-режим
+```bash
+docker run --rm -p 3000:3000 -p 8000:8000 lidar-map-editor
+```
+
 ### GPU-режим
 
 ```bash

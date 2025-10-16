@@ -274,6 +274,7 @@ export const App = () => {
         transformControllerRef={transformControllerRef}
         hasActiveBbox={hasActiveBbox}
         onBboxCreated={handleBboxCreated}
+        clearBboxes={bboxManager.clearAllBboxes}
       />
       <ControlPanel
         onProcessChunks={handleProcessChunks}

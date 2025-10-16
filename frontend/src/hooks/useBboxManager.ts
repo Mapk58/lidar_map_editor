@@ -25,7 +25,7 @@ export const useBboxManager = (
 
   const convertToBboxData = useCallback((bbox: BoundingBox): BboxData => {
     const euler = new THREE.Euler().setFromQuaternion(bbox.rotation);
-    const yaw = euler.y;
+    const yaw = euler.z;
 
     return {
       bounding_box: {
@@ -69,9 +69,8 @@ export const useBboxManager = (
             const filteredPositions: number[] = [];
 
             const mesh = chunk.mesh;
-            const worldMatrix = new THREE.Matrix4();
             mesh.updateMatrixWorld();
-            worldMatrix.copy(mesh.matrixWorld);
+            const worldMatrix = mesh.matrixWorld.clone();
 
             for (let i = 0; i < originalCount; i++) {
               const x = positions[i * 3];
@@ -95,8 +94,10 @@ export const useBboxManager = (
                 new THREE.BufferAttribute(newPositions, 3),
               );
               geometry.computeBoundingSphere();
+              geometry.computeBoundingBox();
             } else {
               chunk.mesh.visible = false;
+              chunk.visible = false;
             }
           }
         }

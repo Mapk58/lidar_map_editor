@@ -24,22 +24,28 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
     const center = transformControllerRef?.current?.position;
     if (!center) return;
 
-    const bbox = {
-      center: center.clone(),
-      size: new THREE.Vector3(3, 3, 3),
-      rotation: new THREE.Quaternion(),
-    };
-
-    if (onBboxCreated) {
-      onBboxCreated(bbox);
+    if (clearBboxes) {
+      clearBboxes();
     }
 
-    window.dispatchEvent(
-      new CustomEvent("pcd-create-bbox-at", {
-        detail: { position: center.clone() },
-      }),
-    );
-  }, [transformControllerRef, onBboxCreated]);
+    setTimeout(() => {
+      const bbox = {
+        center: center.clone(),
+        size: new THREE.Vector3(3, 3, 3),
+        rotation: new THREE.Quaternion(),
+      };
+
+      if (onBboxCreated) {
+        onBboxCreated(bbox);
+      }
+
+      window.dispatchEvent(
+        new CustomEvent("pcd-create-bbox-at", {
+          detail: { position: center.clone() },
+        }),
+      );
+    }, 50);
+  }, [transformControllerRef, onBboxCreated, clearBboxes]);
 
   const handleClearBboxes = useCallback(() => {
     if (clearBboxes) {
@@ -57,6 +63,7 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
       >
         ◻︎
       </button>
+      <div className={styles.separator} />
       <button
         className={styles.button}
         onClick={handleClearBboxes}
@@ -66,7 +73,6 @@ export const ToolsPanel: React.FC<ToolsPanelProps> = ({
       >
         ✕
       </button>
-      <div className={styles.separator} />
     </div>
   );
 };
